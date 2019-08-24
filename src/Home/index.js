@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeScaleType } from '../helpers' 
 import '../index.css'
 import BarChart from '../BarChart'
 /*
@@ -51,19 +50,26 @@ const Home = () => {
 	}, [questionText])
 	
 
-	if(!questionText || !xVal || !yVal || !xType){
+	if(!questionText || !xVal || yVal == null || xType == null){
 	  return(<p>Loading file data...</p>)
 	}
-
-	let xScale = makeScaleType(xType, fileData, xVal)
-	let yScale = makeScaleType(yType, fileData, yVal)
 	
+	let axisObj = {
+		x: {
+			key: xVal,
+			type: xType
+		},
+		y: {
+			key: yVal,
+			type: yType
+		}
+	}
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
-	    <BarChart scales={{xScale, yScale}}/>
+	    <BarChart axis={axisObj} data={fileData} />
 	  </React.Fragment>
 	)
 			

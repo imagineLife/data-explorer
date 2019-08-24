@@ -1,9 +1,15 @@
 import React from 'react';
+import { makeScaleType } from '../helpers' 
 
-const BarChart = ({scales}) => {
-	console.log('scales')
-	console.log(scales)
-	
+const BarChart = ({axis, fileData}) => {
+
+	let {x, y} = axis
+	let { xType, xVal } = x;
+	let { yType, yVal } = y;
+
+	let xScale = makeScaleType(xType, fileData, xVal)
+	let yScale = makeScaleType(yType, fileData, yVal)
+			
 	return (
 	  <div id="chartDiv" style={{height: '500px'}}>
 	  </div>
