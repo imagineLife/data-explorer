@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeScaleType } from '../helpers' 
+import '../index.css'
 
 /*
 	Data Assumptions:
@@ -62,6 +63,7 @@ const Home = () => {
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
+	    <div id="chartDiv" style={{height: '500px'}}/>
 	  </React.Fragment>
 	)
 			
