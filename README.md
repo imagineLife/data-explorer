@@ -1,2 +1,2 @@
-# frontend-boilerplate
-A Frontend-BoilerPlate
+# Data Explorer
+A Data exploration tool
