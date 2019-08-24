@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeScaleType } from '../helpers' 
 import '../index.css'
-
+import BarChart from '../BarChart'
 /*
 	Data Assumptions:
 	1. the data comes in as an array
@@ -52,7 +52,7 @@ const Home = () => {
 	
 
 	if(!questionText || !xVal || !yVal || !xType){
-	  return(<p>No File Data</p>)
+	  return(<p>Loading file data...</p>)
 	}
 
 	let xScale = makeScaleType(xType, fileData, xVal)
@@ -63,7 +63,7 @@ const Home = () => {
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
-	    <div id="chartDiv" style={{height: '500px'}}/>
+	    <BarChart />
 	  </React.Fragment>
 	)
 			
