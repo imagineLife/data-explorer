@@ -63,7 +63,7 @@ const Home = () => {
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
-	    <BarChart />
+	    <BarChart scales={{xScale, yScale}}/>
 	  </React.Fragment>
 	)
 			
