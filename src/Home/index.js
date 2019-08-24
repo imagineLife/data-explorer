@@ -2,11 +2,13 @@ import React from 'react';
 
 
 const Home = () => {
-	return(
-	<div>
-		<h2>Home</h2>
-	</div>
-	)
+	let [fileData, setFiledata] = React.useState(null)
+
+	
+	if(!fileData){
+	  return(<p>No File Data</p>)
+	}
+			
 }
 
 export default Home
