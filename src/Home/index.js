@@ -1,5 +1,47 @@
 import React from 'react';
+import * as scale from 'd3-scale'
+import * as arr from 'd3-array'
 
+const makeScaleType = (type, srcData, pointName) => {
+
+	let thisScale;
+	let uniqueArr;
+	if(type == 'string'){
+		thisScale = scale.scaleOrdinal()
+	}
+	if(type == 'number'){
+		thisScale = scale.scaleLinear()
+	}
+	if(pointName == 'q9'){
+		let xVals = srcData.map(d => d[pointName])
+		uniqueArr = xVals.filter((d, idx) => xVals.indexOf(d) === idx);
+		if(uniqueArr[0].includes('$40')){
+			uniqueArr = [
+			  "", 
+			  "Less than $20,000", 
+			  "$20k - $40k", 
+			  "$40k - $60K", 
+			  "$60k - $80k", 
+			  "$80k - $100k", 
+			  "$100k - $120k", 
+			  "$120k - $140k", 
+			  "$140k - $160k", 
+			  "$160k - $180k", 
+			  "$180k - $2000k", 
+			  "$200k+"
+		    ]
+		}
+		thisScale.domain(uniqueArr)
+	}
+
+	if(pointName == 'q42'){
+		let extentVal = arr.extent(srcData, d => d['q42'])
+		extentVal[0] = 0;
+		thisScale.domain(extentVal)
+	}
+	
+	return thisScale
+}
 
 /*
 	Data Assumptions:
@@ -13,6 +55,8 @@ const Home = () => {
 	let [questionText, setQuestionText] = React.useState(null)
 	let [xVal, setXVal] = React.useState(null)
 	let [yVal, setYVal] = React.useState(null)
+	let [xType, setXType] = React.useState(null)
+	let [yType, setYType] = React.useState(null)
 
 	React.useEffect(() => {
 		fetch('../data/dvs.json').then(data => {
@@ -29,9 +73,6 @@ const Home = () => {
 				qt.json().then(qtParsed => {
 					let questions = qtParsed[0]
 					setQuestionText(questions)
-					console.log('questions')
-					console.log(questions)
-					
 					return
 				}).then(() => {
 					console.log('Here?!')
@@ -43,21 +84,20 @@ const Home = () => {
 
 	React.useEffect(() => {
 		if(questionText && !xVal){
-			setXVal(questionText["q42"])
-			setYVal(questionText["q9"])
+			setYVal("q42")
+			setYType(typeof(fileData[0]["q42"]))
+			setXVal("q9")
+			setXType(typeof(fileData[0]["q9"]))
 		}
 	}, [questionText])
+	
 
-
-
-	if(!questionText || !xVal || !yVal){
+	if(!questionText || !xVal || !yVal || !xType){
 	  return(<p>No File Data</p>)
 	}
 
-	console.log('xVal')
-	console.log(xVal)
-	console.log('yVal')
-	console.log(yVal)
+	let xScale = makeScaleType(xType, fileData, xVal)
+	let yScale = makeScaleType(yType, fileData, yVal)
 	
 	//get keys from object
 	const dataKeys = Object.keys(fileData[0])
@@ -65,12 +105,16 @@ const Home = () => {
 		let thisVal = fileData[0][k]
 		return typeof thisVal
 	})
+
+	console.log('questionText')
+	console.log(questionText)
+	
 	
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
-	    <p>xValue: {xVal} </p>
-	    <p>yValue: {yVal} </p>
+	    <p>xValue: {questionText[xVal]} </p>
+	    <p>yValue: {questionText[yVal]} </p>
 	  </React.Fragment>
 	)
 			
