@@ -67,7 +67,7 @@ const Home = () => {
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
-	    <BarChart axis={axisObj} data={fileData} />
+	    <BarChart axis={axisObj} data={fileData} w={'95%'} h={'500px'}/>
 	  </React.Fragment>
 	)
 			
