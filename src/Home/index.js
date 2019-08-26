@@ -28,13 +28,11 @@ const Home = () => {
 	React.useEffect(() => {
 		if(fileData){
 			fetch('../data/questionText.json').then(qt => {
-				qt.json().then(qtParsed => {
-					let questions = qtParsed[0]
-					setQuestionText(questions)
-					return
-				}).then(() => {
-					console.log('Here?!')
-				});
+			  qt.json().then(qtParsed => {
+				let questions = qtParsed[0]
+				setQuestionText(questions)
+				return
+			  });
 			})
 		}
 	}, [fileData])
