@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 
-const BarChart = ({axis, data, w, h}) => {
+const Chart = ({axis, data, w, h}) => {
 	let thisRef = React.useRef()
 	const [ref, {width}] = useDimensions();
 	let [margins] = React.useState({t:20, r: 10, b: 75, l: 40})	
@@ -24,9 +24,16 @@ const BarChart = ({axis, data, w, h}) => {
 	  xScale.range([0, wLM]);
 	  console.log('xScale.domain()')
 	  console.log(xScale.domain())
+	  console.log('xScale.range()')
+	  console.log(xScale.range())
+	  
 	  
 	  let yScale = makeScaleType(yType, data, yVal);
 	  yScale.range([hLM - margins.b, margins.t]);
+	  console.log('yScale.domain()')
+	  console.log(yScale.domain())
+	  console.log('yScale.range()')
+	  console.log(yScale.range())
 	  
 	  let rects = data.map((d, ind) => {
 	  	return <rect
@@ -69,4 +76,4 @@ const BarChart = ({axis, data, w, h}) => {
 	}
 }
 
-export default BarChart
+export default Chart
