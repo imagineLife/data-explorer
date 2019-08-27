@@ -15,6 +15,7 @@ const Home = () => {
 	let [yVal, setYVal] = React.useState(null)
 	let [xType, setXType] = React.useState(null)
 	let [yType, setYType] = React.useState(null)
+	let [parsedData, setParsedData] = React.useState(null)
 
 	React.useEffect(() => {
 		fetch('../data/dvs.json').then(data => {
@@ -46,9 +47,22 @@ const Home = () => {
 			setXType(typeof(fileData[0]["q9"]))
 		}
 	}, [questionText])
+
+	React.useEffect(() => {
+		if(fileData && xVal && yVal){
+			let justBarData = fileData.map(d => {
+				return {
+					x: d[xVal],
+					y: d[yVal]
+				}
+			})
+
+			setParsedData(justBarData)
+		}
+	}, [fileData, xVal, yVal])
 	
 
-	if(!questionText || !xVal || yVal == null || xType == null){
+	if(!questionText || !xVal || yVal == null || xType == null || parsedData == null){
 	  return(<p>Loading file data...</p>)
 	}
 	
@@ -62,12 +76,21 @@ const Home = () => {
 			type: yType
 		}
 	}
+
+	console.log('parsedData')
+	console.log(parsedData)
+	
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: {questionText[yVal]} </p>
-	    <BarChart axis={axisObj} data={fileData} w={'95%'} h={'500px'}/>
+	    <BarChart
+	    	axis={axisObj} 
+	    	data={parsedData} 
+	    	w={'95%'} 
+	    	h={500}
+	    />
 	  </React.Fragment>
 	)
 			
