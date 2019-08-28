@@ -1,3 +1,3 @@
 import makeScaleType from './makeScales'
-
-export { makeScaleType }
+import wrap from './wrap'
+export { makeScaleType, wrap }

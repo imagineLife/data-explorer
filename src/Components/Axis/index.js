@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as d3Axis from 'd3-axis'
 import { select as d3Select } from 'd3-selection'
 import './index.css'
+import { wrap } from '../../helpers'
 
 export default class Axis extends Component {
   componentDidMount() {
@@ -21,6 +22,10 @@ export default class Axis extends Component {
       .ticks(5)
 
     d3Select(this.axisElement).call(axis)
+    if(this.props.orient == 'bottom'){
+      d3Select(this.axisElement).selectAll(".tick text")
+      .call(wrap, this.props.scale.bandwidth())
+    }
   }
 
   render() {

@@ -1,6 +1,9 @@
 import React from 'react';
 import '../index.css'
-import BarChart from '../BarChart'
+import Chart from '../Chart'
+
+// const prepBarData = (srcData,)
+
 /*
 	Data Assumptions:
 	1. the data comes in as an array
@@ -17,6 +20,7 @@ const Home = () => {
 	let [yType, setYType] = React.useState(null)
 	let [parsedData, setParsedData] = React.useState(null)
 
+	//Fetch dvs
 	React.useEffect(() => {
 		fetch('../data/dvs.json').then(data => {
 			data.json().then(parsed => {
@@ -26,6 +30,7 @@ const Home = () => {
 		})
 	}, [])
 
+	//Fetch questionsText
 	React.useEffect(() => {
 		if(fileData){
 			fetch('../data/questionText.json').then(qt => {
@@ -38,7 +43,7 @@ const Home = () => {
 		}
 	}, [fileData])
 
-
+	//Set x && y values after questionText is set
 	React.useEffect(() => {
 		if(questionText && !xVal){
 			setYVal("q42")
@@ -48,16 +53,40 @@ const Home = () => {
 		}
 	}, [questionText])
 
+	//prep data for chart consumption after data is loaded
 	React.useEffect(() => {
 		if(fileData && xVal && yVal){
-			let justBarData = fileData.map(d => {
-				return {
-					x: d[xVal],
-					y: d[yVal]
+			
+			let resArr = []
+			/*
+				PREP BAR DATA
+				x = 
+			*/
+			fileData.forEach(d => {
+				let thisXInResArr = resArr.filter(ra => ra.x == d[xVal])
+				
+				if(thisXInResArr.length < 1){
+					resArr.push({
+					  x: d[xVal],
+					  y: 1
+					})
+				}else{
+				  thisXInResArr = thisXInResArr[0]
+				  thisXInResArr.y = thisXInResArr.y + 1
+				  
+				  let newResArr = resArr.map(ra => {
+				  	if(ra.x == thisXInResArr.x){
+				  		return thisXInResArr
+				  	}else{
+				  		return ra
+				  	}
+				  })
+				
+				  resArr = newResArr
 				}
 			})
 
-			setParsedData(justBarData)
+			setParsedData(resArr)
 		}
 	}, [fileData, xVal, yVal])
 	
@@ -76,20 +105,18 @@ const Home = () => {
 			type: yType
 		}
 	}
-
-	console.log('parsedData')
-	console.log(parsedData)
 	
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
-	    <p>yValue: {questionText[yVal]} </p>
-	    <BarChart
+	    <p>yValue: Count of responses </p> {/* questionText[yVal]  */}
+	    <Chart
 	    	axis={axisObj} 
-	    	data={parsedData} 
+	    	data={parsedData}
 	    	w={'95%'} 
-	    	h={500}
+	    	h={550}
+	    	chartType={'bar'}
 	    />
 	  </React.Fragment>
 	)

@@ -1,6 +1,5 @@
 #chartDiv{
-	width: 95%;
-	border: 1px solid steelblue; 
+	/*width: 95%;*/
 	margin: 0 auto;
 	min-width: 500px;
 }

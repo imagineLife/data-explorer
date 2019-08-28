@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 
-const Chart = ({axis, data, w, h}) => {
+const Chart = ({axis, data, w, h, chartType}) => {
 	let thisRef = React.useRef()
 	const [ref, {width}] = useDimensions();
 	let [margins] = React.useState({t:20, r: 10, b: 75, l: 40})	
@@ -22,36 +22,32 @@ const Chart = ({axis, data, w, h}) => {
 
 	  let xScale = makeScaleType(xType, data, xVal)
 	  xScale.range([0, wLM]);
-	  console.log('xScale.domain()')
-	  console.log(xScale.domain())
-	  console.log('xScale.range()')
-	  console.log(xScale.range())
-	  
 	  
 	  let yScale = makeScaleType(yType, data, yVal);
 	  yScale.range([hLM - margins.b, margins.t]);
-	  console.log('yScale.domain()')
-	  console.log(yScale.domain())
-	  console.log('yScale.range()')
-	  console.log(yScale.range())
 	  
-	  let rects = data.map((d, ind) => {
-	  	return <rect
-	  		key={`${ind}${d[xVal]}`}
-	  		x={xScale(d.x)}
-	  		y={yScale(d.y)}
-	  		height={hLM - yScale(d.y)}
-	  		fill={'steelblue'}
-	  		width={xScale.bandwidth()}></rect>
-	  })
+	  let optRects;
+	  if(chartType == 'bar'){
+	  	optRects = data.map((d, ind) => {
+		  	
+		  	//Work-around?!
+		  	if(d.x == ""){
+		  		return
+		  	}
+		  	return <rect
+		  		key={`${ind}${d[xVal]}`}
+		  		x={xScale(d.x)}
+		  		y={yScale(d.y)}
+		  		height={hLM - yScale(d.y)}
+		  		fill={'steelblue'}
+		  		width={xScale.bandwidth()}></rect>
+		  }).filter(d => d)
+	  }
 
 	  let svgDimensions = {
 	  	height: h - margins.t,
 	  	width: width - margins.l
 	  }
-
-	  console.log('svgDimensions')
-	  console.log(svgDimensions)
 	  
 	  return (
 	  <div id="chartDiv" style={{height: h, width: w}} ref={ref}>
@@ -64,7 +60,7 @@ const Chart = ({axis, data, w, h}) => {
 	          svgDimensions={svgDimensions}
 	        />
 
-	  	  	{rects}
+	  	  	{optRects}
 	  	  </g>
 	  	</svg>
 	  </div>
