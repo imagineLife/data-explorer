@@ -1,6 +1,7 @@
 import React from 'react';
 import '../index.css'
 import Chart from '../Chart'
+import { prepCountByIncomeData } from '../helpers'
 
 // const prepBarData = (srcData,)
 
@@ -11,6 +12,7 @@ import Chart from '../Chart'
 		2a. the object keys are the same between objects
 		2b. the object keys are mapped to another file, storing the text-content of the keys
 */
+
 const Home = () => {
 	let [fileData, setFiledata] = React.useState(null)
 	let [questionText, setQuestionText] = React.useState(null)
@@ -57,36 +59,10 @@ const Home = () => {
 	React.useEffect(() => {
 		if(fileData && xVal && yVal){
 			
-			let resArr = []
-			/*
-				PREP BAR DATA
-				x = 
-			*/
-			fileData.forEach(d => {
-				let thisXInResArr = resArr.filter(ra => ra.x == d[xVal])
-				
-				if(thisXInResArr.length < 1){
-					resArr.push({
-					  x: d[xVal],
-					  y: 1
-					})
-				}else{
-				  thisXInResArr = thisXInResArr[0]
-				  thisXInResArr.y = thisXInResArr.y + 1
-				  
-				  let newResArr = resArr.map(ra => {
-				  	if(ra.x == thisXInResArr.x){
-				  		return thisXInResArr
-				  	}else{
-				  		return ra
-				  	}
-				  })
-				
-				  resArr = newResArr
-				}
-			})
-
-			setParsedData(resArr)
+			console.log('1');
+			let countByIncome = prepCountByIncomeData(fileData)
+			console.log('3');
+			setParsedData(countByIncome)
 		}
 	}, [fileData, xVal, yVal])
 	
