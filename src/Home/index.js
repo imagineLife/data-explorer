@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css'
 import Chart from '../Chart'
-import { prepCountByIncomeData } from '../helpers'
+import { prepCountByIncomeData, prepCountByYearsData } from '../helpers'
 
 // const prepBarData = (srcData,)
 
@@ -17,10 +17,11 @@ const Home = () => {
 	let [fileData, setFiledata] = React.useState(null)
 	let [questionText, setQuestionText] = React.useState(null)
 	let [xVal, setXVal] = React.useState(null)
-	let [yVal, setYVal] = React.useState(null)
 	let [xType, setXType] = React.useState(null)
 	let [yType, setYType] = React.useState(null)
-	let [parsedData, setParsedData] = React.useState(null)
+	// let [parsedData, setParsedData] = React.useState(null)
+	let [cbiData, setCbiData] = React.useState(null)
+	let [cbyData, setCbyData] = React.useState(null)
 
 	//Fetch dvs
 	React.useEffect(() => {
@@ -48,26 +49,28 @@ const Home = () => {
 	//Set x && y values after questionText is set
 	React.useEffect(() => {
 		if(questionText && !xVal){
-			setYVal("q42")
-			setYType(typeof(fileData[0]["q42"]))
-			setXVal("q9")
-			setXType(typeof(fileData[0]["q9"]))
+			setXVal("q42")
+			setXType(typeof(fileData[0]["q42"]))
 		}
 	}, [questionText])
 
 	//prep data for chart consumption after data is loaded
 	React.useEffect(() => {
-		if(fileData && xVal && yVal){
+		if(fileData && xVal){
 			
-			console.log('1');
-			let countByIncome = prepCountByIncomeData(fileData)
-			console.log('3');
-			setParsedData(countByIncome)
+			// let dataToUse = (xVal == 'q9') ? //CountByIncome
+					let cbiData = prepCountByIncomeData(fileData) //: 
+				// (xVal == 'q42') ?  //CountByYears
+					let cbyData = prepCountByYearsData(fileData)// : null
+
+			setCbyData(cbyData)
+			setCbiData(cbiData)
+			// setParsedData(dataToUse)
 		}
-	}, [fileData, xVal, yVal])
+	}, [fileData, xVal])
 	
 
-	if(!questionText || !xVal || yVal == null || xType == null || parsedData == null){
+	if(!questionText || !xVal || xType == null || cbiData == null || cbyData == null){
 	  return(<p>Loading file data...</p>)
 	}
 	
@@ -75,12 +78,18 @@ const Home = () => {
 		x: {
 			key: xVal,
 			type: xType
-		},
-		y: {
-			key: yVal,
-			type: yType
 		}
 	}
+
+	let axisObjTwo = {
+		x: {
+			key: 'q9',
+			type: typeof(fileData[0]["q9"])
+		}
+	}
+	
+	console.log('questionText[xVal]')
+	console.log(questionText[xVal])
 	
 	return(
 	  <React.Fragment>
@@ -89,7 +98,7 @@ const Home = () => {
 	    <p>yValue: Count of responses </p> {/* questionText[yVal]  */}
 	    <Chart
 	    	axis={axisObj} 
-	    	data={parsedData}
+	    	data={cbyData}
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'bar'}
