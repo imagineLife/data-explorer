@@ -1,3 +1,4 @@
 import makeScaleType from './makeScales'
 import wrap from './wrap'
-export { makeScaleType, wrap }
+import { prepCountByIncomeData } from './dataPrep'
+export { makeScaleType, wrap, prepCountByIncomeData }
