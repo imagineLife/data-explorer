@@ -11,20 +11,29 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	//destructure props	
 	let {x: xAxis, y: yAxis} = axis
 	let { type: xType, key: xVal } = xAxis;
-	let { type: yType, key: yVal } = yAxis;
 
 	//update scales when width is changed
-	if(width && width && h && xVal && yVal){
+	if(width && width && h && xVal){
 
 	  //set dimensions-less-margins
 	  let wLM = width - margins.l - margins.r
 	  let hLM = h - margins.t - margins.b
 
-	  let xScale = makeScaleType(xType, data, xVal)
+	  let xScale = makeScaleType(xType, data, xVal, 'x')
 	  xScale.range([0, wLM]);
 	  
-	  let yScale = makeScaleType(yType, data, yVal);
+	  let yScale = makeScaleType('number', data, 'y');
 	  yScale.range([hLM - margins.b, margins.t]);
+
+	  console.log('%c CHART DATA mapped to bars', 'background-color: blue; color: white;')
+	  console.log('data')
+	  console.log(data)
+	  console.log('%c ------', 'background-color: blue; color: white;')
+	  
+	  console.log('xScale.domain()')
+	  console.log(xScale.domain())
+	  // console.log('xScale.domain(data[0].x)')
+	  // console.log(xScale.domain(data[0].x))
 	  
 	  let optRects;
 	  if(chartType == 'bar'){
@@ -34,6 +43,7 @@ const Chart = ({axis, data, w, h, chartType}) => {
 		  	if(d.x == ""){
 		  		return
 		  	}
+
 		  	return <rect
 		  		key={`${ind}${d[xVal]}`}
 		  		x={xScale(d.x)}
