@@ -24,18 +24,8 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	  
 	  let yScale = makeScaleType('number', data, 'y');
 	  yScale.range([hLM - margins.b, margins.t]);
-
-	  console.log('%c CHART DATA mapped to bars', 'background-color: blue; color: white;')
-	  console.log('data')
-	  console.log(data)
-	  console.log('%c ------', 'background-color: blue; color: white;')
 	  
-	  console.log('xScale.domain()')
-	  console.log(xScale.domain())
-	  // console.log('xScale.domain(data[0].x)')
-	  // console.log(xScale.domain(data[0].x))
-	  
-	  let optRects;
+	  let optRects, optCircles;
 	  if(chartType == 'bar'){
 	  	optRects = data.map((d, ind) => {
 		  	
@@ -52,6 +42,14 @@ const Chart = ({axis, data, w, h, chartType}) => {
 		  		fill={'steelblue'}
 		  		width={xScale.bandwidth()}></rect>
 		  }).filter(d => d)
+	  }
+
+	  if(chartType == 'scatterplot'){
+	  	optCircles = data.map((d, ind) => {
+	  		if(d.x == ''){
+	  			return
+	  		}
+	  	})
 	  }
 
 	  let svgDimensions = {
