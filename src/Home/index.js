@@ -75,39 +75,6 @@ const Home = () => {
 	  return(<p>Loading file data...</p>)
 	}
 	
-	let axisObj = {
-		x: {
-			key: xVal,
-			type: xType
-		},
-		y: {
-			key: null,
-			type: 'number'
-		}
-	}
-
-	let axisObjTwo = {
-		x: {
-			key: 'q9',
-			type: typeof(fileData[0]["q9"])
-		},
-		y: {
-			key: null,
-			type: 'number'
-		}
-	}
-
-	let scatterAxisObj = {
-		x: {
-			key: 'q9',
-			type: 'string'
-		},
-		y: {
-			key: 'q42',
-			type: 'number'
-		}
-	}
-	
 	console.log('questionText[xVal]')
 	console.log(questionText[xVal])
 	
@@ -117,7 +84,16 @@ const Home = () => {
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: Count of responses </p> {/* questionText[yVal]  */}
 	    <Chart
-	    	axis={axisObj} 
+	    	axis={{
+	    		x: {
+						key: xVal,
+						type: xType
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+				}} 
 	    	data={cbyData}
 	    	w={'95%'} 
 	    	h={550}
@@ -125,7 +101,16 @@ const Home = () => {
 	    	groupedX
 	    />
 	    <Chart
-	    	axis={axisObjTwo} 
+	    	axis={{
+	    		x: {
+						key: 'q9',
+						type: typeof(fileData[0]["q9"])
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+	    	}} 
 	    	data={cbiData}
 	    	w={'95%'} 
 	    	h={550}
@@ -133,8 +118,17 @@ const Home = () => {
 	    	groupedX
 	    />
 	    <Chart
-	    	axis={scatterAxisObj} 
-	    	data={fileData}
+	    	axis={{
+	    		x: {
+						key: 'q9',
+						type: 'string'
+					},
+					y: {
+						key: 'q42',
+						type: 'number'
+					}
+	    	}} 
+	    	data={scatterData}
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'scatterplot'}
