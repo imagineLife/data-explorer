@@ -99,6 +99,7 @@ const Home = () => {
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'bar'}
+	    	groupedX
 	    />
 	    <Chart
 	    	axis={axisObjTwo} 
@@ -106,6 +107,14 @@ const Home = () => {
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'bar'}
+	    	groupedX
+	    />
+	    <Chart
+	    	axis={axisObj} 
+	    	data={fileData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'scatterplot'}
 	    />
 	  </React.Fragment>
 	)

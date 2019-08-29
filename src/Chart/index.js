@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 
-const Chart = ({axis, data, w, h, chartType}) => {
+const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	let thisRef = React.useRef()
 	const [ref, {width}] = useDimensions();
 	let [margins] = React.useState({t:20, r: 10, b: 75, l: 40})	
@@ -22,12 +22,13 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	  /*
 			Build Scales
 	  */
-	  let xScale = makeScaleType(xType, data, xVal, 'x')
+	  let xScale = makeScaleType(xType, data, xVal, 'x', chartType, groupedX)
 	  xScale.range([0, wLM]);
 	  
-	  let yScale = makeScaleType('number', data, 'y', null);
+	  let yScale = makeScaleType('number', data, 'y', null, chartType, groupedX);
 	  yScale.range([hLM - margins.b, margins.t]);
 	  
+
 
 	  /*
 			Build Chart Elements
@@ -37,7 +38,7 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	  let dataTypeShapes;
 
 
-	  if(chartType == 'bar'){
+	  if(groupedX){
 	  	dataTypeShapes = data.map((d, ind) => {
 		  	
 		  	//Work-around?!
