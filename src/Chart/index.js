@@ -3,6 +3,14 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 
+
+const xByType = (xVal, xType, xScale) => {
+	if(xType == 'string'){
+		return xScale(xVal) + (xScale.bandwidth() / 2)
+	}else{
+		return xScale(xVal)
+	}
+}
 const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	console.log('%c chartType', 'background-color: blue; color: white;')
 	console.log(chartType);
@@ -29,8 +37,19 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  let xScale = makeScaleType(xType, data, xVal, 'x', chartType, groupedX)
 	  xScale.range([0, wLM]);
 	  
-	  let yScale = makeScaleType(yType || 'number', data, 'y', null, chartType, groupedX);
-	  yScale.range([hLM - margins.b, margins.t]);
+	  let yScale = makeScaleType(yType || 'number', data, yVal, 'y', chartType, groupedX);
+	  yScale.range([hLM, margins.t]);
+
+	  console.log('yScale.domain()')
+	  console.log(yScale.domain())
+	  console.log('yScale.range()')
+	  console.log(yScale.range())
+	  console.log('xScale.domain()')
+	  console.log(xScale.domain())
+	  console.log('xScale.range()')
+	  console.log(xScale.range())
+	  
+	  
 	  
 
 
@@ -61,7 +80,22 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  }
 
 	  if(chartType == 'scatterplot'){
-	  	dataTypeShapes = <text>Scatterplot here!</text>
+	  	dataTypeShapes = data.map((d, ind) => {
+	  		if(d.x == ''){
+	  			return
+	  		}
+	  		return <circle
+	  		  key={`${ind}${d[xVal]}`}
+	  		  r={xScale.bandwidth() * .25}
+	  		  cx={xByType(d.x, xType, xScale)}
+	  		  cy={yScale(d.y)}
+	  		  fill={'black'}
+	  		  fillOpacity={.02}
+	  		  stroke={'darkgray'}
+	  		  strokeWidth={1}
+	  		  strokeOpacity='.75'>
+	  		  </circle>
+	  	})
 	  }
 
 	  let svgDimensions = {
