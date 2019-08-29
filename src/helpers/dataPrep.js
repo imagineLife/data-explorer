@@ -40,4 +40,15 @@ const prepBarChartData = (srcData, xKey) => {
 	return resArr
 }
 
-export { prepBarChartData }
+
+const prepScatterData = (srcData, xVal, yVal) => {
+	let resArr = []
+	resArr = srcData.map(d => {
+		return {
+			x: d[xVal],
+			y: d[yVal]
+		}
+	})
+	return resArr
+}
+export { prepBarChartData, prepScatterData }
