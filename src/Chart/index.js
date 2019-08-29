@@ -19,15 +19,26 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	  let wLM = width - margins.l - margins.r
 	  let hLM = h - margins.t - margins.b
 
+	  /*
+			Build Scales
+	  */
 	  let xScale = makeScaleType(xType, data, xVal, 'x')
 	  xScale.range([0, wLM]);
 	  
-	  let yScale = makeScaleType('number', data, 'y');
+	  let yScale = makeScaleType('number', data, 'y', null);
 	  yScale.range([hLM - margins.b, margins.t]);
 	  
-	  let optRects, optCircles;
+
+	  /*
+			Build Chart Elements
+			Rects for bar
+			Circles for scatterplot
+	  */
+	  let dataTypeShapes;
+
+
 	  if(chartType == 'bar'){
-	  	optRects = data.map((d, ind) => {
+	  	dataTypeShapes = data.map((d, ind) => {
 		  	
 		  	//Work-around?!
 		  	if(d.x == ""){
@@ -45,11 +56,7 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	  }
 
 	  if(chartType == 'scatterplot'){
-	  	optCircles = data.map((d, ind) => {
-	  		if(d.x == ''){
-	  			return
-	  		}
-	  	})
+	  	dataTypeShapes = <text>Scatterplot here!</text>
 	  }
 
 	  let svgDimensions = {
@@ -68,7 +75,7 @@ const Chart = ({axis, data, w, h, chartType}) => {
 	          svgDimensions={svgDimensions}
 	        />
 
-	  	  	{optRects}
+	  	  	{dataTypeShapes}
 	  	  </g>
 	  	</svg>
 	  </div>
