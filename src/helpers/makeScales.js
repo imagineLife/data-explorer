@@ -11,7 +11,7 @@ const makeScaleType = (type, srcData, pointName, axisName, chartType, groupedX) 
 		thisScale = scale.scaleLinear()
 	}
 
-	if(axisName == 'x' && chartType == 'bar'){
+	if(axisName == 'x' && chartType == 'bar' || (axisName == 'x' && pointName == 'q9')){
 		thisScale = scale.scaleBand().padding(.02)
 	}
 
@@ -24,7 +24,7 @@ const makeScaleType = (type, srcData, pointName, axisName, chartType, groupedX) 
 	}
 
 	//q9 == what is your yearly pay
-	if(pointName == 'q9' && chartType == 'bar'){
+	if(pointName == 'q9'){
 		
 		let uniqueArr = [
 		  // "", 
