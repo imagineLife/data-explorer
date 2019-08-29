@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css'
 import Chart from '../Chart'
-import { prepCountByIncomeData, prepCountByYearsData } from '../helpers'
+import { prepBarChartData } from '../helpers'
 
 // const prepBarData = (srcData,)
 
@@ -58,14 +58,11 @@ const Home = () => {
 	React.useEffect(() => {
 		if(fileData && xVal){
 			
-			// let dataToUse = (xVal == 'q9') ? //CountByIncome
-					let cbiData = prepCountByIncomeData(fileData) //: 
-				// (xVal == 'q42') ?  //CountByYears
-					let cbyData = prepCountByYearsData(fileData)// : null
+		  let cbiData = prepBarChartData(fileData, 'q9')
+		  let cbyData = prepBarChartData(fileData, 'q42')
 
-			setCbyData(cbyData)
-			setCbiData(cbiData)
-			// setParsedData(dataToUse)
+		  setCbyData(cbyData)
+	 	  setCbiData(cbiData)
 		}
 	}, [fileData, xVal])
 	
@@ -99,6 +96,13 @@ const Home = () => {
 	    <Chart
 	    	axis={axisObj} 
 	    	data={cbyData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'bar'}
+	    />
+	    <Chart
+	    	axis={axisObjTwo} 
+	    	data={cbiData}
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'bar'}
