@@ -4,13 +4,17 @@ import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 
 const Chart = ({axis, data, w, h, chartType, groupedX}) => {
+	console.log('%c chartType', 'background-color: blue; color: white;')
+	console.log(chartType);
+	
 	let thisRef = React.useRef()
 	const [ref, {width}] = useDimensions();
 	let [margins] = React.useState({t:20, r: 10, b: 75, l: 40})	
 
 	//destructure props	
-	let {x: xAxis, y: yAxis} = axis
+	let {x: xAxis, y: yAxis } = axis
 	let { type: xType, key: xVal } = xAxis;
+	let { type: yType, key: yVal } = yAxis;
 
 	//update scales when width is changed
 	if(width && width && h && xVal){
@@ -25,7 +29,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  let xScale = makeScaleType(xType, data, xVal, 'x', chartType, groupedX)
 	  xScale.range([0, wLM]);
 	  
-	  let yScale = makeScaleType('number', data, 'y', null, chartType, groupedX);
+	  let yScale = makeScaleType(yType || 'number', data, 'y', null, chartType, groupedX);
 	  yScale.range([hLM - margins.b, margins.t]);
 	  
 
