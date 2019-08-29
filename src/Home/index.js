@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css'
 import Chart from '../Chart'
-import { prepBarChartData } from '../helpers'
+import { prepBarChartData, prepScatterData } from '../helpers'
 
 // const prepBarData = (srcData,)
 
@@ -19,9 +19,9 @@ const Home = () => {
 	let [xVal, setXVal] = React.useState(null)
 	let [xType, setXType] = React.useState(null)
 	let [yType, setYType] = React.useState(null)
-	// let [parsedData, setParsedData] = React.useState(null)
 	let [cbiData, setCbiData] = React.useState(null)
 	let [cbyData, setCbyData] = React.useState(null)
+	let [scatterData, setScatterData] = React.useState(null)
 
 	//Fetch dvs
 	React.useEffect(() => {
@@ -60,9 +60,13 @@ const Home = () => {
 			
 		  let cbiData = prepBarChartData(fileData, 'q9')
 		  let cbyData = prepBarChartData(fileData, 'q42')
-
+		  let scatData = prepScatterData(fileData, 'q9', 'q42')
+		  console.log('scatData')
+		  console.log(scatData)
+		  
 		  setCbyData(cbyData)
 	 	  setCbiData(cbiData)
+	 	  setScatterData(scatData)
 		}
 	}, [fileData, xVal])
 	
@@ -75,6 +79,10 @@ const Home = () => {
 		x: {
 			key: xVal,
 			type: xType
+		},
+		y: {
+			key: null,
+			type: 'number'
 		}
 	}
 
@@ -82,6 +90,21 @@ const Home = () => {
 		x: {
 			key: 'q9',
 			type: typeof(fileData[0]["q9"])
+		},
+		y: {
+			key: null,
+			type: 'number'
+		}
+	}
+
+	let scatterAxisObj = {
+		x: {
+			key: 'q9',
+			type: 'string'
+		},
+		y: {
+			key: 'q42',
+			type: 'number'
 		}
 	}
 	
@@ -110,7 +133,7 @@ const Home = () => {
 	    	groupedX
 	    />
 	    <Chart
-	    	axis={axisObj} 
+	    	axis={scatterAxisObj} 
 	    	data={fileData}
 	    	w={'95%'} 
 	    	h={550}
