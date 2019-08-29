@@ -1,25 +1,36 @@
 import * as scale from 'd3-scale'
 import * as arr from 'd3-array'
 
-const makeScaleType = (type, srcData, pointName, axisName, chartType, groupedX) => {	
+const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, groupedX) => {	
 	console.log('%c MAKE SCALE TYPE', 'background-color: orange; color: white;')
 	
 	let thisScale;
 	let uniqueArr;
 
-	if(type == 'number'){
+	console.log('dataPointType')
+	console.log(dataPointType)
+	console.log('pointName')
+	console.log(pointName)
+	console.log('axisName')
+	console.log(axisName)
+	console.log('groupedX')
+	console.log(groupedX)
+	
+
+	if(dataPointType == 'number'){
 		thisScale = scale.scaleLinear()
 	}
 
-	if(axisName == 'x' && chartType == 'bar' || (axisName == 'x' && pointName == 'q9')){
+	if(dataPointType == 'string'){
+		thisScale = scale.scaleBand()
+	}
+
+	if(axisName == 'x' && chartType == 'bar' || (axisName == 'x' && pointName == ('q9' || 'q42'))){
 		thisScale = scale.scaleBand().padding(.02)
 	}
 
-	if(type == 'number' && axisName == 'x' && chartType == 'scatter'){
-		thisScale = scaleLinear()
-	}
-
-	if(pointName == 'y'){
+	if(axisName == 'y'){
+		
 		thisScale.domain(arr.extent(srcData, d => d.y))
 	}
 
@@ -55,11 +66,6 @@ const makeScaleType = (type, srcData, pointName, axisName, chartType, groupedX) 
 		
 		thisScale.domain(domainVal)
 	}
-
-	console.log('thisScale.domain()')
-	console.log(thisScale.domain())
-	console.log('thisScale.range()')
-	console.log(thisScale.range())
 	
 	console.log('%c // - - - - - //', 'background-color: orange; color: white;')
 	
