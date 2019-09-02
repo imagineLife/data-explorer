@@ -57,7 +57,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  //placeholder for optional Line fn
 	  let optLineFn = d3Shape.line()
 	  .defined(d => d.x !== "")
-		.x(d => xScale( d.x ))
+		.x(d => xScale( d.x ) + (xScale.bandwidth() / 2))
 		.y(d => yScale( d.y ))
 		// .curve(d3.curveBasis);
 
