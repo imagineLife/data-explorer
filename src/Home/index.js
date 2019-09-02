@@ -131,6 +131,30 @@ const Home = () => {
 	    />
 
 	    {/*
+	    	Area version of above bar
+				x: # of yrs experience	
+				y: count or resps
+			*/}
+	    
+			<Chart
+	    	axis={{
+	    		x: {
+						key: xVal,
+						type: xType
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+				}} 
+	    	data={cbyData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'area'}
+	    	groupedX
+	    />
+
+	    {/*
 				x: income-range	
 				y: count or resps
 			*/}
