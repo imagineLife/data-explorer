@@ -61,6 +61,11 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		.y(d => yScale( d.y ))
 		// .curve(d3.curveBasis);
 
+		let optAreaFn = d3Shape.area()
+	  .defined(d => d.x !== "")
+		.x(d => xScale( d.x ) + (xScale.bandwidth() / 2))
+		.y0(hLM)
+		.y1(d => yScale( d.y ))
 
 	  /*
 			Build Chart Elements
@@ -99,7 +104,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  stroke='steelblue'
 			  strokeWidth={(chartType !== 'area') ? 4 : 0}
 			  className='path'
-			  d={optLineFn(data)}/>
+			  d={(chartType == 'line') ? optLineFn(data) : optAreaFn(data)}/>
 		 }
 
 	  }
