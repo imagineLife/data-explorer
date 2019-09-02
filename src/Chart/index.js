@@ -12,8 +12,8 @@ const xByType = (xVal, xType, xScale) => {
 	}
 }
 const Chart = ({axis, data, w, h, chartType, groupedX}) => {
-	console.log('%c chartType', 'background-color: blue; color: white;')
-	console.log(chartType);
+	// console.log('%c chartType', 'background-color: blue; color: white;')
+	// console.log(chartType);
 	
 	let thisRef = React.useRef()
 	const [ref, {width}] = useDimensions();
@@ -39,16 +39,20 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  
 	  let yScale = makeScaleType(yType || 'number', data, yVal, 'y', chartType, groupedX);
 	  yScale.range([hLM, margins.t]);
-
-	  // console.log('yScale.domain()')
-	  // console.log(yScale.domain())
-	  // console.log('yScale.range()')
-	  // console.log(yScale.range())
-	  // console.log('xScale.domain()')
-	  // console.log(xScale.domain())
-	  // console.log('xScale.range()')
-	  // console.log(xScale.range())
 	  
+	  //re-order line data to match domain order from makeScaletype
+	  if(chartType == 'line'){
+		  let reOrderedData = xScale.domain().map(thisXVal => {
+		  	let thisDataObj = data.filter(d => d.x == thisXVal)[0]
+		  	return {
+		  		x: thisXVal,
+		  		y: thisDataObj.y
+		  	}
+		  })
+
+		  data = reOrderedData		  
+		  
+	  }
 	  
 	  //placeholder for optional Line fn
 	  let optLineFn = d3Shape.line()
@@ -62,12 +66,13 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			Build Chart Elements
 			Rects for bar
 			Circles for scatterplot
+			path for line-chart
 	  */
 	  let dataTypeShapes;
 
 
+	  //Rectangles
 	  if(groupedX){
-
 	  	if(chartType == 'bar'){
 		  	dataTypeShapes = data.map((d, ind) => {
 			  	
@@ -87,10 +92,8 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  }).filter(d => d)
 		 }
 
+		 //line object
 		 if(chartType == 'line'){
-		 	console.log('optLineFn(data)')
-		 	console.log(optLineFn(data))
-		 	
 		 	dataTypeShapes = <path
 		 	  fill='none'
 			  stroke='steelblue'
