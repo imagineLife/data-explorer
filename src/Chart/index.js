@@ -2,7 +2,7 @@ import React from 'react';
 import { makeScaleType } from '../helpers' 
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
-
+import * as d3Shape from 'd3-shape'
 
 const xByType = (xVal, xType, xScale) => {
 	if(xType == 'string'){
@@ -40,17 +40,22 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  let yScale = makeScaleType(yType || 'number', data, yVal, 'y', chartType, groupedX);
 	  yScale.range([hLM, margins.t]);
 
-	  console.log('yScale.domain()')
-	  console.log(yScale.domain())
-	  console.log('yScale.range()')
-	  console.log(yScale.range())
-	  console.log('xScale.domain()')
-	  console.log(xScale.domain())
-	  console.log('xScale.range()')
-	  console.log(xScale.range())
+	  // console.log('yScale.domain()')
+	  // console.log(yScale.domain())
+	  // console.log('yScale.range()')
+	  // console.log(yScale.range())
+	  // console.log('xScale.domain()')
+	  // console.log(xScale.domain())
+	  // console.log('xScale.range()')
+	  // console.log(xScale.range())
 	  
 	  
-	  
+	  //placeholder for optional Line fn
+	  let optLineFn = d3Shape.line()
+	  .defined(d => d.x !== "")
+		.x(d => xScale( d.x ))
+		.y(d => yScale( d.y ))
+		// .curve(d3.curveBasis);
 
 
 	  /*
@@ -62,14 +67,15 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 
 
 	  if(groupedX){
-	  	dataTypeShapes = data.map((d, ind) => {
-		  	
-		  	//Work-around?!
-		  	if(d.x == ""){
-		  		return
-		  	}
 
-		  	if(chartType == 'bar'){
+	  	if(chartType == 'bar'){
+		  	dataTypeShapes = data.map((d, ind) => {
+			  	
+			  	//Work-around?!
+			  	if(d.x == ""){
+			  		return
+			  	}
+
 		  		return <rect
 			  		key={`${ind}${d[xVal]}`}
 			  		x={xScale(d.x)}
@@ -77,8 +83,22 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  		height={hLM - yScale(d.y)}
 			  		fill={'steelblue'}
 			  		width={xScale.bandwidth()}></rect>
-			  	}
-		  }).filter(d => d)
+
+			  }).filter(d => d)
+		 }
+
+		 if(chartType == 'line'){
+		 	console.log('optLineFn(data)')
+		 	console.log(optLineFn(data))
+		 	
+		 	dataTypeShapes = <path
+		 	  fill='none'
+			  stroke='steelblue'
+			  strokeWidth='4'
+			  className='path'
+			  d={optLineFn(data)}/>
+		 }
+
 	  }
 
 	  if(chartType == 'scatterplot'){
