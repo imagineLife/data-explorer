@@ -3,9 +3,11 @@ import '../index.css'
 import Chart from '../Chart'
 import { prepBarChartData, prepScatterData } from '../helpers'
 
-// const prepBarData = (srcData,)
-
 /*
+
+	Q9 - What is your yearly pay?
+	Q42 - How many years of experience do you have doing professional data visualization?
+
 	Data Assumptions:
 	1. the data comes in as an array
 	2. the array has a bunch of objects with more assumptions...
@@ -61,8 +63,8 @@ const Home = () => {
 		  let cbiData = prepBarChartData(fileData, 'q9')
 		  let cbyData = prepBarChartData(fileData, 'q42')
 		  let scatData = prepScatterData(fileData, 'q9', 'q42')
-		  console.log('scatData')
-		  console.log(scatData)
+		  // console.log('scatData')
+		  // console.log(scatData)
 		  
 		  setCbyData(cbyData)
 	 	  setCbiData(cbiData)
@@ -75,9 +77,6 @@ const Home = () => {
 	  return(<p>Loading file data...</p>)
 	}
 	
-	console.log('cbiData')
-	console.log(cbiData)
-	
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
@@ -88,7 +87,8 @@ const Home = () => {
 				x: # of yrs experience	
 				y: count or resps
 			*/}
-	    <Chart
+	    
+			<Chart
 	    	axis={{
 	    		x: {
 						key: xVal,
@@ -107,10 +107,35 @@ const Home = () => {
 	    />
 
 	    {/*
+	    	LINE version of above bar
+				x: # of yrs experience	
+				y: count or resps
+			*/}
+	    
+			<Chart
+	    	axis={{
+	    		x: {
+						key: xVal,
+						type: xType
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+				}} 
+	    	data={cbyData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'line'}
+	    	groupedX
+	    />
+
+	    {/*
 				x: income-range	
 				y: count or resps
 			*/}
-	    <Chart
+			
+			<Chart
 	    	axis={{
 	    		x: {
 						key: 'q9',
@@ -129,10 +154,34 @@ const Home = () => {
 	    />
 
 	    {/*
+	    	LINE version of above bar
+				x: income-range	
+				y: count or resps
+			*/}
+	    <Chart
+	    	axis={{
+	    		x: {
+						key: 'q9',
+						type: 'string'
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+	    	}} 
+	    	data={cbiData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'line'}
+	    	groupedX
+	    />
+
+	    {/*
 				x: income-range, grouped
 				y: years experience, linear
 			*/}
-	    <Chart
+			
+			<Chart
 	    	axis={{
 	    		x: {
 						key: 'q9',
