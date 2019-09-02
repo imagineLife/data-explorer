@@ -75,14 +75,19 @@ const Home = () => {
 	  return(<p>Loading file data...</p>)
 	}
 	
-	console.log('questionText[xVal]')
-	console.log(questionText[xVal])
+	console.log('cbiData')
+	console.log(cbiData)
 	
 	return(
 	  <React.Fragment>
 	    <h2>Data Explorer</h2>
 	    <p>xValue: {questionText[xVal]} </p>
 	    <p>yValue: Count of responses </p> {/* questionText[yVal]  */}
+	    
+			{/*
+				x: # of yrs experience	
+				y: count or resps
+			*/}
 	    <Chart
 	    	axis={{
 	    		x: {
@@ -100,11 +105,16 @@ const Home = () => {
 	    	chartType={'bar'}
 	    	groupedX
 	    />
+
+	    {/*
+				x: income-range	
+				y: count or resps
+			*/}
 	    <Chart
 	    	axis={{
 	    		x: {
 						key: 'q9',
-						type: typeof(fileData[0]["q9"])
+						type: 'string'
 					},
 					y: {
 						key: null,
@@ -117,6 +127,11 @@ const Home = () => {
 	    	chartType={'bar'}
 	    	groupedX
 	    />
+
+	    {/*
+				x: income-range, grouped
+				y: years experience, linear
+			*/}
 	    <Chart
 	    	axis={{
 	    		x: {
