@@ -7,16 +7,19 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 	let thisScale;
 	let uniqueArr;
 
-	console.log('dataPointType')
-	console.log(dataPointType)
-	console.log('pointName')
-	console.log(pointName)
-	console.log('axisName')
-	console.log(axisName)
-	console.log('groupedX')
-	console.log(groupedX)
+	// console.log('dataPointType')
+	// console.log(dataPointType)
+	// console.log('pointName')
+	// console.log(pointName)
+	// console.log('axisName')
+	// console.log(axisName)
+	// console.log('groupedX')
+	// console.log(groupedX)
 	
 
+/*
+	Scale - Type
+*/
 	if(dataPointType == 'number'){
 		thisScale = scale.scaleLinear()
 	}
@@ -25,9 +28,13 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 		thisScale = scale.scaleBand()
 	}
 
-	if(axisName == 'x' && chartType == 'bar' || (axisName == 'x' && pointName == ('q9' || 'q42'))){
+	if(axisName == 'x'){ // && chartType == 'bar'
 		thisScale = scale.scaleBand().padding(.02)
 	}
+
+/*
+	Scale - Type
+*/
 
 	if(axisName == 'y'){
 		
@@ -56,7 +63,7 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 	}
 
 	//how many years experience
-	if(pointName == 'q42' && chartType == 'bar'){
+	if(pointName == 'q42' && groupedX == true){ //&& chartType == 'bar'
 		let domainVal = []
 		srcData.forEach(d => {
 			if(!domainVal.includes(d.x)){
@@ -66,6 +73,9 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 		
 		thisScale.domain(domainVal)
 	}
+	
+	// console.log('thisScale.domain()')
+	// console.log(thisScale.domain())
 	
 	console.log('%c // - - - - - //', 'background-color: orange; color: white;')
 	
