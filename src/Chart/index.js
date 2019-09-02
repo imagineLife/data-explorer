@@ -69,13 +69,15 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		  		return
 		  	}
 
-		  	return <rect
-		  		key={`${ind}${d[xVal]}`}
-		  		x={xScale(d.x)}
-		  		y={yScale(d.y)}
-		  		height={hLM - yScale(d.y)}
-		  		fill={'steelblue'}
-		  		width={xScale.bandwidth()}></rect>
+		  	if(chartType == 'bar'){
+		  		return <rect
+			  		key={`${ind}${d[xVal]}`}
+			  		x={xScale(d.x)}
+			  		y={yScale(d.y)}
+			  		height={hLM - yScale(d.y)}
+			  		fill={'steelblue'}
+			  		width={xScale.bandwidth()}></rect>
+			  	}
 		  }).filter(d => d)
 	  }
 
@@ -86,7 +88,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  		}
 	  		return <circle
 	  		  key={`${ind}${d[xVal]}`}
-	  		  r={xScale.bandwidth() * .25}
+	  		  r={xType == 'string' ? xScale.bandwidth() * .25 : 5}
 	  		  cx={xByType(d.x, xType, xScale)}
 	  		  cy={yScale(d.y)}
 	  		  fill={'black'}
