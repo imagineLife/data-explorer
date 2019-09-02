@@ -13,6 +13,9 @@ import { prepBarChartData, prepScatterData } from '../helpers'
 	2. the array has a bunch of objects with more assumptions...
 		2a. the object keys are the same between objects
 		2b. the object keys are mapped to another file, storing the text-content of the keys
+	3. AREA charts DEMAND 
+		pre-ordered categorically-scaled data
+			areas can NOT 'figure-out' the order of the data
 */
 
 const Home = () => {
