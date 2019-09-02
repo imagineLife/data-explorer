@@ -41,7 +41,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  yScale.range([hLM, margins.t]);
 	  
 	  //re-order line data to match domain order from makeScaletype
-	  if(chartType == 'line'){
+	  if(['line', 'area'].includes(chartType)){
 		  let reOrderedData = xScale.domain().map(thisXVal => {
 		  	let thisDataObj = data.filter(d => d.x == thisXVal)[0]
 		  	return {
@@ -93,11 +93,11 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		 }
 
 		 //line object
-		 if(chartType == 'line'){
+		 if(['line', 'area'].includes(chartType)){
 		 	dataTypeShapes = <path
-		 	  fill='none'
+		 	  fill={(chartType !== 'area') ? 'none' : 'steelblue'}
 			  stroke='steelblue'
-			  strokeWidth='4'
+			  strokeWidth={(chartType !== 'area') ? 4 : 0}
 			  className='path'
 			  d={optLineFn(data)}/>
 		 }
