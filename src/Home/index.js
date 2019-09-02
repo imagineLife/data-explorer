@@ -201,6 +201,29 @@ const Home = () => {
 	    />
 
 	    {/*
+	    	LINE version of above bar
+				x: income-range	
+				y: count or resps
+			*/}
+	    <Chart
+	    	axis={{
+	    		x: {
+						key: 'q9',
+						type: 'string'
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+	    	}} 
+	    	data={cbiData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'area'}
+	    	groupedX
+	    />
+
+	    {/*
 				x: income-range, grouped
 				y: years experience, linear
 			*/}
