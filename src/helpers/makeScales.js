@@ -14,16 +14,17 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 		thisScale = scale.scaleLinear()
 	}
 
-	if(dataPointType == 'string'){
-		thisScale = scale.scaleBand()
-	}
-
 	if(axisName == 'x'){ // && chartType == 'bar'
-		thisScale = scale.scaleBand().padding(.02)
+		if(chartType !== 'area'){
+			thisScale = scale.scaleBand().padding(.02)
+		}
+		if(chartType == 'area'){
+			thisScale = scale.scaleBand()
+		}
 	}
 
 /*
-	Scale - Type
+	Scale Domain
 */
 
 	if(axisName == 'y'){
