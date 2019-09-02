@@ -102,7 +102,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		 	dataTypeShapes = <path
 		 	  fill={(chartType !== 'area') ? 'none' : 'steelblue'}
 			  stroke='steelblue'
-			  strokeWidth={(chartType !== 'area') ? 4 : 0}
+			  strokeWidth={(chartType !== 'area') ? 3 : 0}
 			  className='path'
 			  d={(chartType == 'line') ? optLineFn(data) : optAreaFn(data)}/>
 		 }
