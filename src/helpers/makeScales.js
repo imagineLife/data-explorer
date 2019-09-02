@@ -7,16 +7,6 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 	let thisScale;
 	let uniqueArr;
 
-	// console.log('dataPointType')
-	// console.log(dataPointType)
-	// console.log('pointName')
-	// console.log(pointName)
-	// console.log('axisName')
-	// console.log(axisName)
-	// console.log('groupedX')
-	// console.log(groupedX)
-	
-
 /*
 	Scale - Type
 */
@@ -73,9 +63,6 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 		
 		thisScale.domain(domainVal)
 	}
-	
-	// console.log('thisScale.domain()')
-	// console.log(thisScale.domain())
 	
 	console.log('%c // - - - - - //', 'background-color: orange; color: white;')
 	
