@@ -95,7 +95,35 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  		width={xScale.bandwidth()}></rect>
 
 			  }).filter(d => d)
-		 }
+		  }
+
+		  if(chartType == 'lollipop'){
+		  	dataTypeShapes = data.map((d, ind) => {
+			  	
+			  	//Work-around?!
+			  	if(d.x == ""){
+			  		return
+			  	}
+
+		  		return <g key={`${ind}${d[xVal]}`}>
+		  			<line
+				  		x1={xScale(d.x)}
+						  x2={xScale(d.x)}
+						  y1={yScale(0)}
+						  y2={yScale(d.y)}
+				  		stroke={'steelblue'}
+				  		strokeWidth={2} />
+				  	<circle 
+		  				cx={xScale(d.x)}
+      				cy={yScale(d.y)}
+      				r={8}
+      				fill={"green"}/>
+				  </g>
+
+			  }).filter(d => d)
+		  }
+
+
 
 		 //line object
 		 if(['line', 'area'].includes(chartType)){
