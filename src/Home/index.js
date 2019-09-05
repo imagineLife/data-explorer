@@ -158,6 +158,30 @@ const Home = () => {
 	    />
 
 	    {/*
+	    	Lollipop version of above bar
+				x: # of yrs experience	
+				y: count or resps
+			*/}
+
+	    <Chart
+	    	axis={{
+	    		x: {
+						key: xVal,
+						type: xType
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+				}} 
+	    	data={cbyData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'lollipop'}
+	    	groupedX
+	    />
+
+	    {/*
 				x: income-range	
 				y: count or resps
 			*/}
@@ -204,7 +228,7 @@ const Home = () => {
 	    />
 
 	    {/*
-	    	LINE version of above bar
+	    	Area version of above bar
 				x: income-range	
 				y: count or resps
 			*/}
@@ -223,6 +247,29 @@ const Home = () => {
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'area'}
+	    	groupedX
+	    />
+
+	    {/*
+	    	Lollipop version of above bar
+				x: income-range	
+				y: count or resps
+			*/}
+	    <Chart
+	    	axis={{
+	    		x: {
+						key: 'q9',
+						type: 'string'
+					},
+					y: {
+						key: null,
+						type: 'number'
+					}
+	    	}} 
+	    	data={cbiData}
+	    	w={'95%'} 
+	    	h={550}
+	    	chartType={'lollipop'}
 	    	groupedX
 	    />
 
