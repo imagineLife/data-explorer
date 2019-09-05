@@ -98,6 +98,12 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		  }
 
 		  if(chartType == 'lollipop'){
+		  	console.log('yScale.domain()')
+		  	console.log(yScale.domain())
+		  	console.log('yScale.range()')
+		  	console.log(yScale.range())
+		  	
+		  	
 		  	dataTypeShapes = data.map((d, ind) => {
 			  	
 			  	//Work-around?!
@@ -109,7 +115,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		  			<line
 				  		x1={xScale(d.x)}
 						  x2={xScale(d.x)}
-						  y1={yScale(0)}
+						  y1={yScale(yScale.domain()[0])}
 						  y2={yScale(d.y)}
 				  		stroke={'steelblue'}
 				  		strokeWidth={2} />
