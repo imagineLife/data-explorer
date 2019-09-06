@@ -3,6 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 import * as d3Shape from 'd3-shape'
+import { makeLollipops } from './lib'
 
 const xByType = (xVal, xType, xScale) => {
 	if(xType == 'string'){
@@ -98,11 +99,6 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		  }
 
 		  if(chartType == 'lollipop'){
-		  	console.log('yScale.domain()')
-		  	console.log(yScale.domain())
-		  	console.log('yScale.range()')
-		  	console.log(yScale.range())
-		  	
 		  	
 		  	dataTypeShapes = data.map((d, ind) => {
 			  	
@@ -111,20 +107,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  		return
 			  	}
 
-		  		return <g key={`${ind}${d[xVal]}`}>
-		  			<line
-				  		x1={xScale(d.x)}
-						  x2={xScale(d.x)}
-						  y1={yScale(yScale.domain()[0])}
-						  y2={yScale(d.y)}
-				  		stroke={'steelblue'}
-				  		strokeWidth={2} />
-				  	<circle 
-		  				cx={xScale(d.x)}
-      				cy={yScale(d.y)}
-      				r={8}
-      				fill={"green"}/>
-				  </g>
+		  		return makeLollipops(d,ind,xVal,yScale,xScale);
 
 			  }).filter(d => d)
 		  }
