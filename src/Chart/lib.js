@@ -10,12 +10,17 @@ function makeLine(xScale, yScale, d){
   		strokeWidth={2} />
 }
 
-function makeCircle(xScale, yScale, d){
+function makeCircle(xScale, yScale, d, ind, xVal, rad, f, fO, s, sW, sO){
 	return <circle 
+		key={xVal ? `${ind}-${xVal}` : ind}
 		cx={xScale(d.x)}
 		cy={yScale(d.y)}
-		r={8}
-		fill={"green"}/>
+		r={rad || 8}
+		fill={f || "green"}
+		fillOpacity={fO || 1}
+		stroke={s || 'none'}
+	  strokeWidth={sW || 0}
+	  strokeOpacity={sO || 0}/>
 }
 
 function makeRect(d, ind, xVal, xScale, yScale, maxHeight){
@@ -37,4 +42,4 @@ function makeLollipops(d,ind,xVal,yScale,xScale){
   </g>)
 }
 
-export { makeLollipops, makeRect }
+export { makeLollipops, makeRect, makeCircle }

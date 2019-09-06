@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 import * as d3Shape from 'd3-shape'
-import { makeLollipops, makeRect } from './lib'
+import { makeLollipops, makeRect, makeCircle } from './lib'
 
 const xByType = (xVal, xType, xScale) => {
 	if(xType == 'string'){
@@ -125,17 +125,12 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	  		if(d.x == ''){
 	  			return
 	  		}
-	  		return <circle
-	  		  key={`${ind}${d[xVal]}`}
-	  		  r={xType == 'string' ? xScale.bandwidth() * .25 : 5}
-	  		  cx={xByType(d.x, xType, xScale)}
-	  		  cy={yScale(d.y)}
-	  		  fill={'black'}
-	  		  fillOpacity={.02}
-	  		  stroke={'darkgray'}
-	  		  strokeWidth={1}
-	  		  strokeOpacity='.75'>
-	  		  </circle>
+
+	  		let calcRadius = xType == 'string' ? xScale.bandwidth() * .25 : 5
+	  		let calcCX = xByType(d.x, xType, xScale)
+	  		let calcCY = yScale(d.y)
+	  		return makeCircle(xScale, yScale, d, ind, xVal, calcRadius, 'black', .02, 'darkgray',1,'.75')
+	 
 	  	})
 	  }
 
