@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 import * as d3Shape from 'd3-shape'
-import { makeLollipops } from './lib'
+import { makeLollipops, makeRect } from './lib'
 
 const xByType = (xVal, xType, xScale) => {
 	if(xType == 'string'){
@@ -87,13 +87,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			  		return
 			  	}
 
-		  		return <rect
-			  		key={`${ind}${d[xVal]}`}
-			  		x={xScale(d.x)}
-			  		y={yScale(d.y)}
-			  		height={hLM - yScale(d.y)}
-			  		fill={'steelblue'}
-			  		width={xScale.bandwidth()}></rect>
+		  		return makeRect(d, ind, xVal, xScale, yScale, hLM)
 
 			  }).filter(d => d)
 		  }

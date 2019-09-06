@@ -18,6 +18,16 @@ function makeCircle(xScale, yScale, d){
 		fill={"green"}/>
 }
 
+function makeRect(d, ind, xVal, xScale, yScale, maxHeight){
+	return <rect
+		key={`${ind}${d[xVal]}`}
+		x={xScale(d.x)}
+		y={yScale(d.y)}
+		height={maxHeight - yScale(d.y)}
+		fill={'steelblue'}
+		width={xScale.bandwidth()} />
+}
+
 function makeLollipops(d,ind,xVal,yScale,xScale){
 	let thisLine = makeLine(xScale,yScale,d)
 	let thisCircle = makeCircle(xScale, yScale, d)
@@ -27,4 +37,4 @@ function makeLollipops(d,ind,xVal,yScale,xScale){
   </g>)
 }
 
-export { makeLollipops }
+export { makeLollipops, makeRect }
