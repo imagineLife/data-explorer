@@ -3,7 +3,7 @@ import { makeScaleType } from '../helpers'
 import useDimensions from '../Hooks/useDimensions'
 import AxesAndMath from '../Components/AxesAndMath'
 import * as d3Shape from 'd3-shape'
-import { makeLollipops, makeRect, makeCircle } from './lib'
+import { makeLollipops, makeRect, makeCircle, makePath } from './lib'
 
 const xByType = (xVal, xType, xScale) => {
 	if(xType == 'string'){
@@ -12,7 +12,7 @@ const xByType = (xVal, xType, xScale) => {
 		return xScale(xVal)
 	}
 }
-const Chart = ({axis, data, w, h, chartType, groupedX}) => {
+const Chart = ({axis, data, w, h, chartType, groupedX, showPoints}) => {
 	// console.log('%c chartType', 'background-color: blue; color: white;')
 	// console.log(chartType);
 	
@@ -54,6 +54,10 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 		  data = reOrderedData		  
 		  
 	  }
+
+	  console.log('data')
+	  console.log(data)
+	  
 	  
 	  //placeholder for optional Line fn
 	  let optLineFn = d3Shape.line()
@@ -74,7 +78,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 			Circles for scatterplot
 			path for line-chart
 	  */
-	  let dataTypeShapes;
+	  let dataTypeShapes, optExtraPoints;
 
 
 	  //Rectangles
@@ -110,12 +114,22 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 
 		 //line object
 		 if(['line', 'area'].includes(chartType)){
-		 	dataTypeShapes = <path
-		 	  fill={(chartType !== 'area') ? 'none' : 'steelblue'}
-			  stroke='steelblue'
-			  strokeWidth={(chartType !== 'area') ? 3 : 0}
-			  className='path'
-			  d={(chartType == 'line') ? optLineFn(data) : optAreaFn(data)}/>
+	 		let calcFill = (chartType !== 'area') ? 'none' : 'steelblue'
+	 		let calcStrW = (chartType !== 'area') ? 3 : 0
+	 		let calcD = (chartType == 'line') ? optLineFn(data) : optAreaFn(data)
+		 	
+		 	dataTypeShapes = makePath(calcFill,'steelblue',calcStrW,'path', calcD)
+		 	
+		 	
+		 	optExtraPoints = showPoints ? data.map((d, ind) => {
+		 		if(d.x == ""){
+		 			return null
+		 		}
+		 		let calcRadius = xType == 'string' ? xScale.bandwidth() * .25 : 5
+	  		let calcCX = xScale( d.x ) + (xScale.bandwidth() / 2)
+	  		let calcCY = yScale(d.y)
+	  		return makeCircle(xScale, yScale, d, ind, xVal, calcRadius, null, null, null, null, null, calcCX)
+		 	}).filter(d => d) : null
 		 }
 
 	  }
@@ -151,6 +165,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX}) => {
 	        />
 
 	  	  	{dataTypeShapes}
+	  	  	{optExtraPoints}
 	  	  </g>
 	  	</svg>
 	  </div>
