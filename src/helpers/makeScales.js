@@ -2,7 +2,7 @@ import * as scale from 'd3-scale'
 import * as arr from 'd3-array'
 
 const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, groupedX) => {	
-	console.log('%c MAKE SCALE TYPE', 'background-color: orange; color: white;')
+	// console.log('%c MAKE SCALE TYPE', 'background-color: orange; color: white;')
 	
 	let thisScale;
 	let uniqueArr;
@@ -11,6 +11,10 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 	Scale - Type
 */
 	if(dataPointType == 'number'){
+		thisScale = scale.scaleLinear()
+	}
+
+	if(dataPointType !== 'number'){
 		thisScale = scale.scaleLinear()
 	}
 
@@ -28,8 +32,8 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 */
 
 	if(axisName == 'y'){
-		
-		thisScale.domain(arr.extent(srcData, d => d.y))
+		let maxVal = [arr.max(srcData, d => d.y)]
+		thisScale.domain([0,maxVal])
 	}
 
 	//q9 == what is your yearly pay
@@ -65,7 +69,7 @@ const makeScaleType = (dataPointType, srcData, pointName, axisName, chartType, g
 		thisScale.domain(domainVal)
 	}
 	
-	console.log('%c // - - - - - //', 'background-color: orange; color: white;')
+	// console.log('%c // - - - - - //', 'background-color: orange; color: white;')
 	
 	return thisScale
 }
