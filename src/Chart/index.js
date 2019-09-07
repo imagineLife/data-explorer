@@ -53,11 +53,7 @@ const Chart = ({axis, data, w, h, chartType, groupedX, showPoints}) => {
 
 		  data = reOrderedData		  
 		  
-	  }
-
-	  console.log('data')
-	  console.log(data)
-	  
+	  }	  
 	  
 	  //placeholder for optional Line fn
 	  let optLineFn = d3Shape.line()
@@ -120,12 +116,12 @@ const Chart = ({axis, data, w, h, chartType, groupedX, showPoints}) => {
 		 	
 		 	dataTypeShapes = makePath(calcFill,'steelblue',calcStrW,'path', calcD)
 		 	
-		 	
+
 		 	optExtraPoints = showPoints ? data.map((d, ind) => {
-		 		if(d.x == ""){
+		 		if(d.x === ""){
 		 			return null
 		 		}
-		 		let calcRadius = xType == 'string' ? xScale.bandwidth() * .25 : 5
+		 		let calcRadius = chartType == 'line' ? xScale.bandwidth() * .25 : 5
 	  		let calcCX = xScale( d.x ) + (xScale.bandwidth() / 2)
 	  		let calcCY = yScale(d.y)
 	  		return makeCircle(xScale, yScale, d, ind, xVal, calcRadius, null, null, null, null, null, calcCX)
