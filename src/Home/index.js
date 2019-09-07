@@ -66,8 +66,6 @@ const Home = () => {
 		  let cbiData = prepBarChartData(fileData, 'q9')
 		  let cbyData = prepBarChartData(fileData, 'q42')
 		  let scatData = prepScatterData(fileData, 'q9', 'q42')
-		  // console.log('scatData')
-		  // console.log(scatData)
 		  
 		  setCbyData(cbyData)
 	 	  setCbiData(cbiData)
@@ -131,6 +129,7 @@ const Home = () => {
 	    	h={550}
 	    	chartType={'line'}
 	    	groupedX
+	    	showPoints
 	    />
 
 	    {/*
@@ -224,6 +223,7 @@ const Home = () => {
 	    	w={'95%'} 
 	    	h={550}
 	    	chartType={'line'}
+	    	showPoints
 	    	groupedX
 	    />
 
