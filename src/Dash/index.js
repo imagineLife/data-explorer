@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as f from 'd3-fetch';
+import { errorHandler } from './helpers'
 
 let Dash = () => {
 
-	function drawOutput(lines){
+	let [data, setData] = React.useState(null)
+	let [dataHeader, setDataHeader] = React.useState([])
+
+	useEffect(() => {
+		if(dataHeader.length > 0){
+			console.log('%c DATA HEADER!', 'background-color: steelblue; color: blue;')
+			console.log('dataHeader')
+			console.log(dataHeader)
+		}
+	},[dataHeader])
+
+	function drawOutput(lines, colCount){
 		//Clear previous data
 		// document.getElementById("output").innerHTML = "";
 		var table = document.createElement("table");
@@ -14,31 +26,30 @@ let Dash = () => {
 				firstNameCell.appendChild(document.createTextNode(lines[i][j]));
 			}
 		}
-		console.log('table')
-		console.log(table)
+		// console.log('table')
+		// console.log(table)
 		
-		// document.getElementById("output").appendChild(table);
+		// document.getElementById("result").appendChild(table);
 	}
 
-	function processData(csv) {
-	    var allTextLines = csv.split(/\r\n|\n/);
-	    var lines = [];
-	    while (allTextLines.length) {
-	        lines.push(allTextLines.shift().split(','));
-	    }
-		console.log(lines);
-		drawOutput(lines);
-	}
+	const getContent = e => e.target.result;
 
-	function loadHandler(event) {
-		var csv = event.target.result;
-		processData(csv);             
-	}
-
-	function errorHandler(evt) {
-		if(evt.target.error.name == "NotReadableError") {
-			alert("Canno't read file !");
-		}
+	function loadHandler(e){
+		let content = getContent(e)
+		var arrOfRows = content.split(/\r\n|\n/);
+    // console.log('arrOfRows')
+    // console.log(arrOfRows)
+    
+    var lines = [];
+    while(arrOfRows.length) {
+        lines.push(arrOfRows.shift().split(','));
+    }
+    // console.log('%c --**FIRST Line**--', 'background-color: orange; color: white;')
+		let header = lines[0]
+		// console.log(header)
+		let columnCount = header.length
+		setDataHeader(header)
+		setData(arrOfRows)
 	}
 
 	let handleFiles = (e) => {
@@ -46,32 +57,20 @@ let Dash = () => {
 		
 		let files = e.target.files
 		let fileToRead = files[0]
-		// let splat = files.split('\\')
-		// let fileString = splat[splat.length - 1]
-		console.log('fileToRead')
-		console.log(fileToRead)
+
 		var reader = new FileReader();
 		// Handle errors load
 		reader.onload = loadHandler;
 		reader.onerror = errorHandler;
 		// Read file into memory as UTF-8      
 		reader.readAsText(fileToRead);
-		// let reader = new FileReader();
-  //   reader.onload = function () {
-  //       document.getElementById('out').innerHTML = reader.result;
-  //   };
-  //   // start reading the file. When it is done, calls the onload event defined above.
-  //   reader.readAsBinaryString(e);
-  	// f.csv(`./data/${fileString}`).then(data => {
-  	// 	console.log('data')
-  	// 	console.log(data)
-  		
-  	// })
 	}
+
 	return(
 		<main> 
 			<h2>New Dash</h2>
 			<input type="file" accept=".csv" onChange={e => handleFiles(e)}/>
+			<div id="result"/>
 		</main>
 	)
 }
