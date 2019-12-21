@@ -71,6 +71,23 @@ let Dash = () => {
 			<h2>New Dash</h2>
 			<input type="file" accept=".csv" onChange={e => handleFiles(e)}/>
 			<div id="result"/>
+			{dataHeader &&
+				dataHeader.length > 0 &&
+				<table>
+					<thead>
+						<th>Column</th>
+						<th>Type</th>
+					</thead>
+					<tbody>
+						{dataHeader.map(d => (
+							<tr>
+								<td key={`${d}-header`}>{d}</td>
+								<td></td>
+							</tr>))
+						}
+					</tbody>
+				</table>
+			}
 		</main>
 	)
 }
