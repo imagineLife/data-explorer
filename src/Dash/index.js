@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import * as f from 'd3-fetch';
+import * as ar from 'd3-array';
 import { errorHandler } from './helpers'
 
 let Dash = () => {
@@ -94,21 +95,22 @@ let Dash = () => {
 			headerObj[h] = null
 		})
 		
-		// let resData = []
+		let resData = []
 		/*
 			convert csv arrays into key/val objects
 		*/
-		// lines.forEach((l,lIdx) => {
-		// 	if(lIdx === 0) return;
-		// 	let thisObj = {}
 
-		// 	/*
-		// 		Use header var
-		// 	*/
-		// })
-
+		lines.forEach((l,lIdx) => {
+			if(lIdx === 0) return;
+			let thisRowObj = {}
+			l.forEach((cell, cellIdx) => {
+				thisRowObj[header[cellIdx]] = cell
+			})
+			resData.push(thisRowObj)
+		})
+		
 		setDataHeader(header)
-		setData(arrOfRows)
+		setData(resData)
 		setTypes(types)
 		
 	}
@@ -145,6 +147,7 @@ let Dash = () => {
 							<th>Column</th>
 							<th>Type</th>
 							<th>Min</th>
+							<th>Min</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -152,7 +155,8 @@ let Dash = () => {
 							<tr key={`${d}-header`}>
 								<td>{d}</td>
 								<td>{types[idx]}</td>
-								<td>{data.min(dat => dat[d])}</td>
+								<td>{ar.min(data, dat => dat[d])}</td>
+								<td>{ar.max(data, dat => dat[d])}</td>
 							</tr>))
 						}
 					</tbody>
