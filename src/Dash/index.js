@@ -34,22 +34,78 @@ let Dash = () => {
 
 	const getContent = e => e.target.result;
 
+	function lineHTMLFn({id,
+			hosp,	
+			station,	
+			riskScore,	
+			outlierOccurances,	
+			daysOpen,	
+			lastActivity, 
+			...meds	
+		}){
+		console.log('%c ---lineHTMLFN---', 'background-color: steelblue; color: white;')
+		
+		console.log(id)
+		console.log('// - - - - - //')
+		
+		return(<tr>
+			<td>{id}</td>
+			<td>{hosp}</td>
+			<td>{station}</td>
+			<td>{riskScore}</td>
+			<td>{outlierOccurancse}</td>
+			<td>{daysOpen}</td>
+			<td>{lastActivity}</td>
+			<td>{meds}</td>
+		</tr>)
+	}
+
 	function loadHandler(e){
 		let content = getContent(e)
+
 		var arrOfRows = content.split(/\r\n|\n/);
-    // console.log('arrOfRows')
-    // console.log(arrOfRows)
-    
+    console.log('arrOfRows')
+    console.log(arrOfRows)
+
+    // //build 'lines' array
     var lines = [];
     while(arrOfRows.length) {
         lines.push(arrOfRows.shift().split(','));
     }
-    // console.log('%c --**FIRST Line**--', 'background-color: orange; color: white;')
-		let header = lines[0]
-		// console.log(header)
+
+    let header = lines[0]
+   
+   //build line string
+    var lineHTML = ''
+    
+    let reMappedObj = {} //{...arrOfRows.shift().split(',')}
+  	header.forEach(k => {
+  		reMappedObj[k] = ''
+  	})
+
+  	// let finalArr = []
+    // lines.forEach(line => {
+    	// const {...reMappedObj} = {...line}
+
+
+			// const { id, ...otherKeys } = {line} 
+   //  	console.log('otherKeys')
+   //  	console.log(otherKeys)
+    	
+    	// lineHTML += lineHTMLFn()
+    // })
+    
+
+    // console.log('lineHTML')
+		// console.log(lineHTML)
+
+		
+
 		let columnCount = header.length
+
 		setDataHeader(header)
 		setData(arrOfRows)
+		
 	}
 
 	let handleFiles = (e) => {
@@ -75,13 +131,15 @@ let Dash = () => {
 				dataHeader.length > 0 &&
 				<table>
 					<thead>
-						<th>Column</th>
-						<th>Type</th>
+						<tr>
+							<th>Column</th>
+							<th>Type</th>
+						</tr>
 					</thead>
 					<tbody>
 						{dataHeader.map(d => (
-							<tr>
-								<td key={`${d}-header`}>{d}</td>
+							<tr key={`${d}-header`}>
+								<td>{d}</td>
 								<td></td>
 							</tr>))
 						}
