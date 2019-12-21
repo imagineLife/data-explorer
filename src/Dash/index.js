@@ -4,9 +4,9 @@ import { errorHandler } from './helpers'
 
 let Dash = () => {
 
-	let [data, setData] = React.useState(null)
+	let [data, setData] = React.useState([])
 	let [dataHeader, setDataHeader] = React.useState([])
-
+	let [types, setTypes] = React.useState([])
 	useEffect(() => {
 		if(dataHeader.length > 0){
 			console.log('%c DATA HEADER!', 'background-color: steelblue; color: blue;')
@@ -64,8 +64,6 @@ let Dash = () => {
 		let content = getContent(e)
 
 		var arrOfRows = content.split(/\r\n|\n/);
-    console.log('arrOfRows')
-    console.log(arrOfRows)
 
     // //build 'lines' array
     var lines = [];
@@ -74,14 +72,16 @@ let Dash = () => {
     }
 
     let header = lines[0]
+   	let firstLine = lines[1]
    
+
    //build line string
-    var lineHTML = ''
+    // var lineHTML = ''
     
-    let reMappedObj = {} //{...arrOfRows.shift().split(',')}
-  	header.forEach(k => {
-  		reMappedObj[k] = ''
-  	})
+   //  let reMappedObj = {} //{...arrOfRows.shift().split(',')}
+  	// header.forEach(k => {
+  	// 	reMappedObj[k] = ''
+  	// })
 
   	// let finalArr = []
     // lines.forEach(line => {
@@ -101,10 +101,27 @@ let Dash = () => {
 
 		
 
-		let columnCount = header.length
+		// let columnCount = header.length
 
+		let types = []
+		
+		firstLine.forEach(l => {
+			console.log('%c ----****----', 'background-color: brown; color: white;')
+			
+			let thisType = (typeof l)			
+			let tryNumberType = parseInt(l)
+			let isNumber = tryNumberType > 0
+			
+			thisType = isNumber ? 'number' : 'string';
+			types.push(thisType)
+		})
+
+		console.log('lines')
+		console.log(lines)
+		
 		setDataHeader(header)
 		setData(arrOfRows)
+		setTypes(types)
 		
 	}
 
@@ -121,26 +138,33 @@ let Dash = () => {
 		// Read file into memory as UTF-8      
 		reader.readAsText(fileToRead);
 	}
-
+	if(data.length > 0){
+		console.log('data')
+		console.log(data)
+	}
 	return(
 		<main> 
 			<h2>New Dash</h2>
 			<input type="file" accept=".csv" onChange={e => handleFiles(e)}/>
 			<div id="result"/>
-			{dataHeader &&
+			{data.length > 0 && dataHeader &&
 				dataHeader.length > 0 &&
+				types &&
+				types.length > 0 &&
 				<table>
 					<thead>
 						<tr>
 							<th>Column</th>
 							<th>Type</th>
+							<th>Min</th>
 						</tr>
 					</thead>
 					<tbody>
-						{dataHeader.map(d => (
+						{dataHeader.map((d, idx) => (
 							<tr key={`${d}-header`}>
 								<td>{d}</td>
-								<td></td>
+								<td>{types[idx]}</td>
+								<td>{data.min(dat => dat[d])}</td>
 							</tr>))
 						}
 					</tbody>
