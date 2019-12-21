@@ -11,9 +11,6 @@ let stationArr = ['ER', 'HeartSpot', 'PACU'];
 let meds = ['heroin','cocaine','methamphetamine','dxm','mdma', 'Psilocybin']
 
 for(let i = 1; i <=howManyRows; i++){
-	console.log('i')
-	console.log(i)
-	
 	let thisID = randomInt(100,999)
 	let thisHops = hospArr[Math.floor(Math.random()*hospArr.length)]
 	let thisStation = stationArr[Math.floor(Math.random()*stationArr.length)]
@@ -22,21 +19,21 @@ for(let i = 1; i <=howManyRows; i++){
 	let days = randomInt(2,24)
 	let lastAct = randomInt(30,720)
 	let medCount = randomInt(1,6)
-	let thisMeds = []
-	for(let i = 1; i <=medCount; i++){
-		let rndMed = meds[Math.floor(Math.random()*meds.length)]
-		thisMeds = [...thisMeds, rndMed]
-	}
+	
+	//MEDS ARRAY
+	// let thisMeds = []
+	// for(let i = 1; i <=medCount; i++){
+	// 	let rndMed = meds[Math.floor(Math.random()*meds.length)]
+	// 	thisMeds = [...thisMeds, rndMed]
+	// }
 
-	let resStr = `user-${thisID},${thisHops},${thisStation},${thisRisk},${occs},${days},${lastAct},${JSON.stringify(thisMeds)}\n`
+	let resStr = `user-${thisID},${thisHops},${thisStation},${thisRisk},${occs},${days},${lastAct}\n` //,${JSON.stringify(thisMeds)}
 	res += resStr
-	console.log('// - - - - - //')
 }
 
 let end = new Date()
 let dur = end - st;
-console.log('dur')
-console.log(dur)
+console.log(`%c ---Duration to create ${howManyRows} rows: ${dur}`, 'background-color: orange; color: white;')
 
 console.log('res')
 console.log(res)
