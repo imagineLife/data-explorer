@@ -72,41 +72,13 @@ let Dash = () => {
     }
 
     let header = lines[0]
-   	let firstLine = lines[1]
-   
+   	let firstLine = lines[1]	
 
-   //build line string
-    // var lineHTML = ''
-    
-   //  let reMappedObj = {} //{...arrOfRows.shift().split(',')}
-  	// header.forEach(k => {
-  	// 	reMappedObj[k] = ''
-  	// })
-
-  	// let finalArr = []
-    // lines.forEach(line => {
-    	// const {...reMappedObj} = {...line}
-
-
-			// const { id, ...otherKeys } = {line} 
-   //  	console.log('otherKeys')
-   //  	console.log(otherKeys)
-    	
-    	// lineHTML += lineHTMLFn()
-    // })
-    
-
-    // console.log('lineHTML')
-		// console.log(lineHTML)
-
-		
-
-		// let columnCount = header.length
-
+   	/*
+			Get Types from data
+   	*/
 		let types = []
-		
 		firstLine.forEach(l => {
-			console.log('%c ----****----', 'background-color: brown; color: white;')
 			
 			let thisType = (typeof l)			
 			let tryNumberType = parseInt(l)
@@ -115,10 +87,26 @@ let Dash = () => {
 			thisType = isNumber ? 'number' : 'string';
 			types.push(thisType)
 		})
-
-		console.log('lines')
-		console.log(lines)
 		
+		//Re-Usable header obj
+		let headerObj = {}
+		header.forEach((h,idx) => {
+			headerObj[h] = null
+		})
+		
+		// let resData = []
+		/*
+			convert csv arrays into key/val objects
+		*/
+		// lines.forEach((l,lIdx) => {
+		// 	if(lIdx === 0) return;
+		// 	let thisObj = {}
+
+		// 	/*
+		// 		Use header var
+		// 	*/
+		// })
+
 		setDataHeader(header)
 		setData(arrOfRows)
 		setTypes(types)
