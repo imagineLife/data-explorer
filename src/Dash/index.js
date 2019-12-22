@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import * as f from 'd3-fetch';
 import * as ar from 'd3-array';
-import { errorHandler } from './helpers'
+import { errorHandler, getTypeOfCell } from './helpers'
 
 let Dash = () => {
 
@@ -16,19 +16,6 @@ let Dash = () => {
 			console.log(dataHeader)
 		}
 	},[dataHeader])
-
-	const getTypeOfCell = dataItem => {
-		let returnedItem = dataItem
-		let thisType = 'string';
-		let tryParseNum = parseInt(dataItem)
-		if(tryParseNum > 0){
-			thisType = 'number'
-		}
-		if(thisType === 'number'){
-			returnedItem = parseInt(dataItem)
-		}
-		return returnedItem;
-	}
 
 	const getContent = e => e.target.result;
 
@@ -68,10 +55,11 @@ let Dash = () => {
 		
 		let resData = []
 		/*
-			convert csv arrays into key/val objects
+			- convert csv arrays into key/val objects
+			- store column-data in arrays by column-name in an objec
 		*/
 
-		let microDataSetArr = []
+		let microDataSetObj = {...headerObj}
 
 		lines.forEach((l,lIdx) => {
 			//ignore header row
@@ -83,7 +71,13 @@ let Dash = () => {
 			let thisRowObj = {}
 			l.forEach((cell, cellIdx) => {
 				let thisCellTyped = getTypeOfCell(cell)
-				thisRowObj[header[cellIdx]] = thisCellTyped
+				let thisHeaderID = header[cellIdx]
+				thisRowObj[thisHeaderID] = thisCellTyped
+
+				if(microDataSetObj[thisHeaderID] == null){
+					microDataSetObj[thisHeaderID] = []
+				}
+				microDataSetObj[thisHeaderID].push(thisCellTyped)
 			})
 			resData.push(thisRowObj)
 		})
@@ -91,6 +85,7 @@ let Dash = () => {
 		setTypes(types)
 		setDataHeader(header)
 		setData(resData)
+		setMicroSets(microDataSetObj)
 		
 	}
 
