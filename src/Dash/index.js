@@ -155,9 +155,16 @@ let Dash = () => {
 							<th>Max</th>
 							<th>Mean</th>
 							<th>Median</th>
+							<th>
+								<a 
+									target="_blank" 
+									href="http://mathworld.wolfram.com/SampleVariance.html"
+								>Variance</a>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
+						{/* Loop Through header columns to create table cells */}
 						{dataHeader.map((d, idx) => (
 							<tr key={`${d}-header`}>
 								<td>{d}</td>
@@ -172,6 +179,9 @@ let Dash = () => {
 									return valOrNull(dat, d, idx, types)
 								})}</td>
 								<td>{ar.median(data, dat => {
+									return valOrNull(dat, d, idx, types)
+								})}</td>
+								<td>{ar.variance(data, dat => {
 									return valOrNull(dat, d, idx, types)
 								})}</td>
 							</tr>))
