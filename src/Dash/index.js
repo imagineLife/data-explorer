@@ -49,28 +49,6 @@ let Dash = () => {
 
 	const getContent = e => e.target.result;
 
-	function lineHTMLFn({id,
-			hosp,	
-			station,	
-			riskScore,	
-			outlierOccurances,	
-			daysOpen,	
-			lastActivity, 
-			...meds	
-		}){
-		
-		return(<tr>
-			<td>{id}</td>
-			<td>{hosp}</td>
-			<td>{station}</td>
-			<td>{riskScore}</td>
-			<td>{outlierOccurancse}</td>
-			<td>{daysOpen}</td>
-			<td>{lastActivity}</td>
-			<td>{meds}</td>
-		</tr>)
-	}
-
 	function loadHandler(e){
 		let content = getContent(e)
 
@@ -198,7 +176,7 @@ let Dash = () => {
 			href="http://mathworld.wolfram.com/SampleVariance.html"
 		>Deviation</a>
 	</th>
-		
+
 	<td>{ar.variance(data, dat => {
 		return valOrNull(dat, d, idx, types)
 	})}</td>
