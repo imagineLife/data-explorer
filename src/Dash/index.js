@@ -7,6 +7,7 @@ let Dash = () => {
 
 	let [data, setData] = React.useState([])
 	let [dataHeader, setDataHeader] = React.useState([])
+	let [microSets, setMicroSets] = React.useState([]);
 	let [types, setTypes] = React.useState([])
 	useEffect(() => {
 		if(dataHeader.length > 0){
@@ -32,6 +33,19 @@ let Dash = () => {
 		}else{
 			null
 		}
+	}
+
+	const getTypeOfCell = dataItem => {
+		let returnedItem = dataItem
+		let thisType = 'string';
+		let tryParseNum = parseInt(dataItem)
+		if(tryParseNum > 0){
+			thisType = 'number'
+		}
+		if(thisType === 'number'){
+			returnedItem = parseInt(dataItem)
+		}
+		return returnedItem;
 	}
 
 	function drawOutput(lines, colCount){
@@ -88,18 +102,26 @@ let Dash = () => {
 			convert csv arrays into key/val objects
 		*/
 
+		let microDataSetArr = []
+
 		lines.forEach((l,lIdx) => {
+			//ignore header row
 			if(lIdx === 0) return;
+			/*
+				- build json row data && push to resData
+				- build arr of each column's data & prep to store in microSets
+			*/
 			let thisRowObj = {}
 			l.forEach((cell, cellIdx) => {
-				thisRowObj[header[cellIdx]] = cell
+				let thisCellTyped = getTypeOfCell(cell)
+				thisRowObj[header[cellIdx]] = thisCellTyped
 			})
 			resData.push(thisRowObj)
 		})
 		
+		setTypes(types)
 		setDataHeader(header)
 		setData(resData)
-		setTypes(types)
 		
 	}
 
@@ -115,10 +137,16 @@ let Dash = () => {
 		reader.readAsText(fileToRead);
 	}
 
+	console.log('microSets')
+	console.log(microSets)
+	console.log('data')
+	console.log(data)
+	
+
 	return(
 		<main> 
 			<h2>New Dash</h2>
-			<input type="file" accept=".csv" onChange={e => handleFiles(e)}/>
+			{data.length < 1 && <input type="file" accept=".csv" onChange={e => handleFiles(e)}/>}
 			<div id="result"/>
 			{data.length > 0 && dataHeader &&
 				dataHeader.length > 0 &&
@@ -141,18 +169,10 @@ let Dash = () => {
 							<tr key={`${d}-header`}>
 								<td>{d}</td>
 								<td>{types[idx]}</td>
-								<td>{ar.min(data, dat => {
-									return typedVal(dat, d, idx, types)
-								})}</td>
-								<td>{ar.max(data, dat => {
-									return typedVal(dat, d, idx, types)
-								})}</td>
-								<td>{ar.mean(data, dat => {
-									return valOrNull(dat, d, idx, types)
-								})}</td>
-								<td>{ar.median(data, dat => {
-									return valOrNull(dat, d, idx, types)
-								})}</td>
+								<td>{ar.min(data, dataItem => dataItem[d])}</td>
+								<td>{ar.max(data, dataItem => dataItem[d])}</td>
+								<td>{ar.mean(data, dataItem => dataItem[d])}</td>
+								<td>{ar.median(data, dataItem => dataItem[d])}</td>
 							</tr>))
 						}
 					</tbody>
