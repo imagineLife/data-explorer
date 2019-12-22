@@ -16,6 +16,24 @@ let Dash = () => {
 		}
 	},[dataHeader])
 
+	const typedVal = (dat, d, idx, types) => {
+		let thisType = types[idx]
+		if(thisType === 'number'){
+			return parseInt(dat[d])
+		}else{
+			return dat[d]
+		}
+	}
+
+	const valOrNull = (dat, d, idx, types) => {
+		let thisType = types[idx]
+		if(thisType === 'number'){
+			return parseInt(dat[d])
+		}else{
+			null
+		}
+	}
+
 	function drawOutput(lines, colCount){
 		//Clear previous data
 		// document.getElementById("output").innerHTML = "";
@@ -27,10 +45,6 @@ let Dash = () => {
 				firstNameCell.appendChild(document.createTextNode(lines[i][j]));
 			}
 		}
-		// console.log('table')
-		// console.log(table)
-		
-		// document.getElementById("result").appendChild(table);
 	}
 
 	const getContent = e => e.target.result;
@@ -44,10 +58,6 @@ let Dash = () => {
 			lastActivity, 
 			...meds	
 		}){
-		console.log('%c ---lineHTMLFN---', 'background-color: steelblue; color: white;')
-		
-		console.log(id)
-		console.log('// - - - - - //')
 		
 		return(<tr>
 			<td>{id}</td>
@@ -116,8 +126,6 @@ let Dash = () => {
 	}
 
 	let handleFiles = (e) => {
-		console.log('%c --HANDLING FILES!!', 'background-color: orange; color: black;')
-		
 		let files = e.target.files
 		let fileToRead = files[0]
 
@@ -128,10 +136,7 @@ let Dash = () => {
 		// Read file into memory as UTF-8      
 		reader.readAsText(fileToRead);
 	}
-	if(data.length > 0){
-		console.log('data')
-		console.log(data)
-	}
+
 	return(
 		<main> 
 			<h2>New Dash</h2>
@@ -148,6 +153,8 @@ let Dash = () => {
 							<th>Type</th>
 							<th>Min</th>
 							<th>Max</th>
+							<th>Mean</th>
+							<th>Median</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -156,20 +163,16 @@ let Dash = () => {
 								<td>{d}</td>
 								<td>{types[idx]}</td>
 								<td>{ar.min(data, dat => {
-									let thisType = types[idx]
-									if(thisType === 'number'){
-										return parseInt(dat[d])
-									}else{
-										return dat[d]
-									}
+									return typedVal(dat, d, idx, types)
 								})}</td>
 								<td>{ar.max(data, dat => {
-									let thisType = types[idx]
-									if(thisType === 'number'){
-										return parseInt(dat[d])
-									}else{
-										return dat[d]
-									}
+									return typedVal(dat, d, idx, types)
+								})}</td>
+								<td>{ar.mean(data, dat => {
+									return valOrNull(dat, d, idx, types)
+								})}</td>
+								<td>{ar.median(data, dat => {
+									return valOrNull(dat, d, idx, types)
 								})}</td>
 							</tr>))
 						}
