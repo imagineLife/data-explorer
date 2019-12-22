@@ -17,24 +17,6 @@ let Dash = () => {
 		}
 	},[dataHeader])
 
-	const typedVal = (dat, d, idx, types) => {
-		let thisType = types[idx]
-		if(thisType === 'number'){
-			return parseInt(dat[d])
-		}else{
-			return dat[d]
-		}
-	}
-
-	const valOrNull = (dat, d, idx, types) => {
-		let thisType = types[idx]
-		if(thisType === 'number'){
-			return parseInt(dat[d])
-		}else{
-			null
-		}
-	}
-
 	const getTypeOfCell = dataItem => {
 		let returnedItem = dataItem
 		let thisType = 'string';
@@ -46,19 +28,6 @@ let Dash = () => {
 			returnedItem = parseInt(dataItem)
 		}
 		return returnedItem;
-	}
-
-	function drawOutput(lines, colCount){
-		//Clear previous data
-		// document.getElementById("output").innerHTML = "";
-		var table = document.createElement("table");
-		for (var i = 0; i < lines.length; i++) {
-			var row = table.insertRow(-1);
-			for (var j = 0; j < lines[i].length; j++) {
-				var firstNameCell = row.insertCell(-1);
-				firstNameCell.appendChild(document.createTextNode(lines[i][j]));
-			}
-		}
 	}
 
 	const getContent = e => e.target.result;
@@ -181,28 +150,5 @@ let Dash = () => {
 		</main>
 	)
 }
-
-/*
-
-	<th>
-		<a 
-			target="_blank" 
-			href="http://mathworld.wolfram.com/SampleVariance.html"
-		>Variance of first</a>
-	</th>
-	<th>
-		<a 
-			target="_blank" 
-			href="http://mathworld.wolfram.com/SampleVariance.html"
-		>Deviation</a>
-	</th>
-
-	<td>{ar.variance(data, dat => {
-		return valOrNull(dat, d, idx, types)
-	})}</td>
-	<td>{ar.deviation(data, dat => {
-		return valOrNull(dat, d, idx, types)
-	})}</td>
-*/
 
 export default Dash
