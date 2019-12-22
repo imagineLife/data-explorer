@@ -155,12 +155,6 @@ let Dash = () => {
 							<th>Max</th>
 							<th>Mean</th>
 							<th>Median</th>
-							<th>
-								<a 
-									target="_blank" 
-									href="http://mathworld.wolfram.com/SampleVariance.html"
-								>Variance</a>
-							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -181,9 +175,6 @@ let Dash = () => {
 								<td>{ar.median(data, dat => {
 									return valOrNull(dat, d, idx, types)
 								})}</td>
-								<td>{ar.variance(data, dat => {
-									return valOrNull(dat, d, idx, types)
-								})}</td>
 							</tr>))
 						}
 					</tbody>
@@ -192,5 +183,28 @@ let Dash = () => {
 		</main>
 	)
 }
+
+/*
+
+	<th>
+		<a 
+			target="_blank" 
+			href="http://mathworld.wolfram.com/SampleVariance.html"
+		>Variance of first</a>
+	</th>
+	<th>
+		<a 
+			target="_blank" 
+			href="http://mathworld.wolfram.com/SampleVariance.html"
+		>Deviation</a>
+	</th>
+		
+	<td>{ar.variance(data, dat => {
+		return valOrNull(dat, d, idx, types)
+	})}</td>
+	<td>{ar.deviation(data, dat => {
+		return valOrNull(dat, d, idx, types)
+	})}</td>
+*/
 
 export default Dash
