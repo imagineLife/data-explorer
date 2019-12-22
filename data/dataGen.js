@@ -1,5 +1,5 @@
 let res = ``
-let howManyRows = 50;
+let howManyRows = 250;
 let st = new Date()
 function randomInt(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
