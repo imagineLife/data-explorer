@@ -147,7 +147,7 @@ let Dash = () => {
 							<th>Column</th>
 							<th>Type</th>
 							<th>Min</th>
-							<th>Min</th>
+							<th>Max</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -155,8 +155,22 @@ let Dash = () => {
 							<tr key={`${d}-header`}>
 								<td>{d}</td>
 								<td>{types[idx]}</td>
-								<td>{ar.min(data, dat => dat[d])}</td>
-								<td>{ar.max(data, dat => dat[d])}</td>
+								<td>{ar.min(data, dat => {
+									let thisType = types[idx]
+									if(thisType === 'number'){
+										return parseInt(dat[d])
+									}else{
+										return dat[d]
+									}
+								})}</td>
+								<td>{ar.max(data, dat => {
+									let thisType = types[idx]
+									if(thisType === 'number'){
+										return parseInt(dat[d])
+									}else{
+										return dat[d]
+									}
+								})}</td>
 							</tr>))
 						}
 					</tbody>
