@@ -113,6 +113,9 @@ let Dash = () => {
 				<table>
 					<thead>
 						<tr>
+							<th colSpan="6">Data-Wide Stats</th>
+						</tr>
+						<tr>
 							<th>Column</th>
 							<th>Type</th>
 							<th>Min</th>
