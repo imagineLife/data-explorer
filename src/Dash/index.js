@@ -9,13 +9,6 @@ let Dash = () => {
 	let [dataHeader, setDataHeader] = React.useState([])
 	let [microSets, setMicroSets] = React.useState([]);
 	let [types, setTypes] = React.useState([])
-	useEffect(() => {
-		if(dataHeader.length > 0){
-			console.log('%c DATA HEADER!', 'background-color: steelblue; color: blue;')
-			console.log('dataHeader')
-			console.log(dataHeader)
-		}
-	},[dataHeader])
 
 	const getContent = e => e.target.result;
 
@@ -54,12 +47,11 @@ let Dash = () => {
 		})
 		
 		let resData = []
+		let microDataSetObj = {...headerObj}
 		/*
 			- convert csv arrays into key/val objects
 			- store column-data in arrays by column-name in an objec
 		*/
-
-		let microDataSetObj = {...headerObj}
 
 		lines.forEach((l,lIdx) => {
 			//ignore header row
@@ -77,8 +69,11 @@ let Dash = () => {
 				if(microDataSetObj[thisHeaderID] == null){
 					microDataSetObj[thisHeaderID] = []
 				}
+
+				//push cell value to matching-header-micro-data-set
 				microDataSetObj[thisHeaderID].push(thisCellTyped)
 			})
+			//push row data to resData array
 			resData.push(thisRowObj)
 		})
 		
@@ -111,7 +106,6 @@ let Dash = () => {
 		<main> 
 			<h2>New Dash</h2>
 			{data.length < 1 && <input type="file" accept=".csv" onChange={e => handleFiles(e)}/>}
-			<div id="result"/>
 			{data.length > 0 && dataHeader &&
 				dataHeader.length > 0 &&
 				types &&
