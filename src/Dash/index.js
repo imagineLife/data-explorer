@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import * as f from 'd3-fetch';
 import * as ar from 'd3-array';
 import { errorHandler, getTypeOfCell } from './helpers'
 
 let Dash = () => {
 
-	let [data, setData] = React.useState([])
-	let [dataHeader, setDataHeader] = React.useState([])
-	let [microSets, setMicroSets] = React.useState([]);
-	let [types, setTypes] = React.useState([])
+	let [data, setData] = useState([])
+	let [dataHeader, setDataHeader] = useState([])
+	let [microSets, setMicroSets] = useState({});
+	let [types, setTypes] = useState([])
 
 	const getContent = e => e.target.result;
 
@@ -110,34 +110,40 @@ let Dash = () => {
 				dataHeader.length > 0 &&
 				types &&
 				types.length > 0 &&
-				<table>
-					<thead>
-						<tr>
-							<th colSpan="6">Data-Wide Stats</th>
-						</tr>
-						<tr>
-							<th>Column</th>
-							<th>Type</th>
-							<th>Min</th>
-							<th>Max</th>
-							<th>Mean</th>
-							<th>Median</th>
-						</tr>
-					</thead>
-					<tbody>
-						{/* Loop Through header columns to create table cells */}
-						{dataHeader.map((d, idx) => (
-							<tr key={`${d}-header`}>
-								<td>{d}</td>
-								<td>{types[idx]}</td>
-								<td>{ar.min(data, dataItem => dataItem[d])}</td>
-								<td>{ar.max(data, dataItem => dataItem[d])}</td>
-								<td>{ar.mean(data, dataItem => dataItem[d])}</td>
-								<td>{ar.median(data, dataItem => dataItem[d])}</td>
-							</tr>))
-						}
-					</tbody>
-				</table>
+				<Fragment>
+					<table>
+						<thead>
+							<tr>
+								<th colSpan="6">Data-Wide Stats</th>
+							</tr>
+							<tr>
+								<th>Column</th>
+								<th>Type</th>
+								<th>Min</th>
+								<th>Max</th>
+								<th>Mean</th>
+								<th>Median</th>
+								<th>Population Variance</th>
+								<th>Deviation</th>
+							</tr>
+						</thead>
+						<tbody>
+							{/* Loop Through header columns to create table cells */}
+							{dataHeader.map((d, idx) => (
+								<tr key={`${d}-header`}>
+									<td>{d}</td>
+									<td>{types[idx]}</td>
+									<td>{ar.min(data, dataItem => dataItem[d])}</td>
+									<td>{ar.max(data, dataItem => dataItem[d])}</td>
+									<td>{ar.mean(data, dataItem => dataItem[d])}</td>
+									<td>{ar.median(data, dataItem => dataItem[d])}</td>
+									<td>{typeof data[1][d] === 'number' && ar.variance(data, dataItem => dataItem[d]).toFixed(2)}</td>
+									<td>{typeof data[1][d] === 'number' && ar.deviation(data, dataItem => dataItem[d]).toFixed(2)}</td>
+								</tr>))
+							}
+						</tbody>
+					</table>
+				</Fragment>
 			}
 		</main>
 	)
