@@ -114,7 +114,7 @@ let Dash = () => {
 					<table>
 						<thead>
 							<tr>
-								<th colSpan="6">Data-Wide Stats</th>
+								<th colSpan="8">Data-Wide Stats</th>
 							</tr>
 							<tr>
 								<th>Column</th>
@@ -127,7 +127,7 @@ let Dash = () => {
 								<th>Deviation</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody style={{textAlign: 'center'}}>
 							{/* Loop Through header columns to create table cells */}
 							{dataHeader.map((d, idx) => (
 								<tr key={`${d}-header`}>
