@@ -143,6 +143,27 @@ let Dash = () => {
 							}
 						</tbody>
 					</table>
+
+					<table>
+						<thead>
+							<tr>
+								<th colSpan="8">Data-Wide Stats</th>
+							</tr>
+							<tr>
+								{dataHeader.map(dh => (
+									<td key={`data-header-${dh}`}>{dh}</td>))}
+							</tr>
+						</thead>
+						<tbody style={{textAlign: 'center', maxHeight: '250px', overflowY: 'scroll'}}>
+							{/* Loop Through header columns to create table cells */}
+							{data.map((d, idx) => (
+								<tr key={`${idx}-row`}>
+									{dataHeader.map((dh, dhIdx) => (
+										<td key={`single-data-cell-${d[dh]}-${dhIdx}`}>{d[dh]}</td>))}
+								</tr>))
+							}
+						</tbody>
+					</table>
 				</Fragment>
 			}
 		</main>
