@@ -4,4 +4,17 @@ function errorHandler(evt) {
 	}
 }
 
-export { errorHandler }
+const getTypeOfCell = dataItem => {
+	let returnedItem = dataItem
+	let thisType = 'string';
+	let tryParseNum = parseInt(dataItem)
+	if(tryParseNum > 0){
+		thisType = 'number'
+	}
+	if(thisType === 'number'){
+		returnedItem = parseInt(dataItem)
+	}
+	return returnedItem;
+}
+
+export { errorHandler, getTypeOfCell }
