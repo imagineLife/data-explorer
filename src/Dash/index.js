@@ -2,6 +2,7 @@ import React, { useEffect, Fragment, useState } from 'react';
 import * as f from 'd3-fetch';
 import * as ar from 'd3-array';
 import { errorHandler, getTypeOfCell } from './helpers'
+import './index.css'
 
 let Dash = () => {
 
@@ -104,7 +105,7 @@ let Dash = () => {
 
 	return(
 		<main> 
-			<h2>New Dash</h2>
+			<h2>Data Explorer</h2>
 			{data.length < 1 && <input type="file" accept=".csv" onChange={e => handleFiles(e)}/>}
 			{data.length > 0 && dataHeader &&
 				dataHeader.length > 0 &&
@@ -123,8 +124,17 @@ let Dash = () => {
 								<th>Max</th>
 								<th>Mean</th>
 								<th>Median</th>
-								<th>Population Variance</th>
-								<th>Deviation</th>
+								<th>
+									<a 
+										hrf="https://www.statisticshowto.datasciencecentral.com/population-variance/" 
+										target="_blank">Population Variance
+									</a>
+								</th>
+								<th>
+									<a 
+										href="https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/standard-deviation/"
+										target="_blank">Deviation</a>
+								</th>
 							</tr>
 						</thead>
 						<tbody style={{textAlign: 'center'}}>
@@ -144,26 +154,28 @@ let Dash = () => {
 						</tbody>
 					</table>
 
-					<table>
-						<thead>
-							<tr>
-								<th colSpan="8">Data-Wide Stats</th>
-							</tr>
-							<tr>
-								{dataHeader.map(dh => (
-									<td key={`data-header-${dh}`}>{dh}</td>))}
-							</tr>
-						</thead>
-						<tbody style={{textAlign: 'center', maxHeight: '250px', overflowY: 'scroll'}}>
-							{/* Loop Through header columns to create table cells */}
-							{data.map((d, idx) => (
-								<tr key={`${idx}-row`}>
-									{dataHeader.map((dh, dhIdx) => (
-										<td key={`single-data-cell-${d[dh]}-${dhIdx}`}>{d[dh]}</td>))}
-								</tr>))
-							}
-						</tbody>
-					</table>
+					<div>
+						<h2>Rows</h2>
+						<div className="max-height">
+							<table className="data-table">
+								<thead>
+									<tr>
+										{dataHeader.map((dh, dhIdx) => (
+											<th key={`single-data-cell-header-${dhIdx}`}>{dh}</th>))}
+									</tr>
+								</thead>
+								<tbody>
+									{/* Loop Through header columns to create table cells */}
+									{data.map((d, idx) => (
+										<tr key={`${idx}-row`}>
+											{dataHeader.map((dh, dhIdx) => (
+												<td key={`single-data-cell-${d[dh]}-${dhIdx}`}>{d[dh]}</td>))}
+										</tr>))
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</Fragment>
 			}
 		</main>
