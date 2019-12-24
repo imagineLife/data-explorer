@@ -97,12 +97,6 @@ let Dash = () => {
 		reader.readAsText(fileToRead);
 	}
 
-	console.log('microSets')
-	console.log(microSets)
-	console.log('data')
-	console.log(data)
-	
-
 	return(
 		<main> 
 			<h2>Data Explorer</h2>
