@@ -159,7 +159,7 @@ let Dash = () => {
 						<div className="max-height">
 							<table className="data-table">
 								<thead>
-									<tr>
+									<tr className="sticky-header">
 										{dataHeader.map((dh, dhIdx) => (
 											<th key={`single-data-cell-header-${dhIdx}`}>{dh}</th>))}
 									</tr>
