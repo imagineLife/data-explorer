@@ -4,14 +4,29 @@ import * as ar from 'd3-array';
 import { errorHandler, getTypeOfCell } from './helpers'
 import './index.css'
 
+const getContent = e => e.target.result;
+
+const getTypesFromArray = srcArr => {
+	let resArr = []
+	srcArr.forEach(l => {
+		
+		let thisType = (typeof l)			
+		let tryNumberType = parseInt(l)
+		let isNumber = tryNumberType > 0
+		
+		thisType = isNumber ? 'number' : 'string';
+		resArr.push(thisType)
+	})
+
+	return resArr
+}
+
 let Dash = () => {
 
 	let [data, setData] = useState([])
 	let [dataHeader, setDataHeader] = useState([])
 	let [microSets, setMicroSets] = useState({});
 	let [types, setTypes] = useState([])
-
-	const getContent = e => e.target.result;
 
 	function loadHandler(e){
 		let content = getContent(e)
@@ -30,16 +45,7 @@ let Dash = () => {
    	/*
 			Get Types from data
    	*/
-		let types = []
-		firstLine.forEach(l => {
-			
-			let thisType = (typeof l)			
-			let tryNumberType = parseInt(l)
-			let isNumber = tryNumberType > 0
-			
-			thisType = isNumber ? 'number' : 'string';
-			types.push(thisType)
-		})
+		let types = getTypesFromArray(firstLine)
 		
 		//Re-Usable header obj
 		let headerObj = {}
