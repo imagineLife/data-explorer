@@ -164,7 +164,7 @@ let Dash = () => {
 											<th key={`single-data-cell-header-${dhIdx}`}>{dh}</th>))}
 									</tr>
 								</thead>
-								<tbody>
+								<tbody className="details-table">
 									{/* Loop Through header columns to create table cells */}
 									{data.map((d, idx) => (
 										<tr key={`${idx}-row`} onClick={() => rowClickHander(d)}>
