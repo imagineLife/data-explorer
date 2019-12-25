@@ -1,25 +1,8 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import * as f from 'd3-fetch';
 import * as ar from 'd3-array';
-import { errorHandler, getTypeOfCell } from './helpers'
+import { errorHandler, getTypeOfCell, getContent, getTypesFromArray } from './helpers'
 import './index.css'
-
-const getContent = e => e.target.result;
-
-const getTypesFromArray = srcArr => {
-	let resArr = []
-	srcArr.forEach(l => {
-		
-		let thisType = (typeof l)			
-		let tryNumberType = parseInt(l)
-		let isNumber = tryNumberType > 0
-		
-		thisType = isNumber ? 'number' : 'string';
-		resArr.push(thisType)
-	})
-
-	return resArr
-}
 
 let Dash = () => {
 
@@ -175,7 +158,7 @@ let Dash = () => {
 									{data.map((d, idx) => (
 										<tr key={`${idx}-row`} onClick={() => rowClickHander(d)}>
 											{dataHeader.map((dh, dhIdx) => (
-												<td key={`single-data-cell-${d[dh]}-${dhIdx}`}>{d[dh]}</td>))}
+												<td key={`single-data-cell-${d[dh]}-${dhIdx}`} className={dhIdx === 1 ? 'hosp-cell' : null}>{d[dh]}</td>))}
 										</tr>))
 									}
 								</tbody>

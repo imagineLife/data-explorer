@@ -17,4 +17,21 @@ const getTypeOfCell = dataItem => {
 	return returnedItem;
 }
 
-export { errorHandler, getTypeOfCell }
+const getContent = e => e.target.result;
+
+const getTypesFromArray = srcArr => {
+	let resArr = []
+	srcArr.forEach(l => {
+		
+		let thisType = (typeof l)			
+		let tryNumberType = parseInt(l)
+		let isNumber = tryNumberType > 0
+		
+		thisType = isNumber ? 'number' : 'string';
+		resArr.push(thisType)
+	})
+
+	return resArr
+}
+
+export { errorHandler, getTypeOfCell, getContent, getTypesFromArray }
