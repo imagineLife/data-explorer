@@ -97,6 +97,12 @@ let Dash = () => {
 		reader.readAsText(fileToRead);
 	}
 
+	const rowClickHander = (rowData) => {
+		console.log('rowData')
+		console.log(rowData)
+		
+	}
+
 	return(
 		<main> 
 			<h2>Data Explorer</h2>
@@ -161,7 +167,7 @@ let Dash = () => {
 								<tbody>
 									{/* Loop Through header columns to create table cells */}
 									{data.map((d, idx) => (
-										<tr key={`${idx}-row`}>
+										<tr key={`${idx}-row`} onClick={() => rowClickHander(d)}>
 											{dataHeader.map((dh, dhIdx) => (
 												<td key={`single-data-cell-${d[dh]}-${dhIdx}`}>{d[dh]}</td>))}
 										</tr>))
