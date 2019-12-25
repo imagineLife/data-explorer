@@ -13,6 +13,11 @@ table {
   position: relative;
   border-collapse: collapse; 
 }
+
+.sticky-header > th{
+	background-color: #1F2739;
+}
+
 th, td {
   padding: 0.25rem;
 }
