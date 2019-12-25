@@ -48,6 +48,11 @@ th {
 .max-height{
 	max-height: 300px;
 	overflow-y: scroll;
+  width: fit-content;
+}
+
+.details-table{
+ line-height: 2.25;
 }
 
 /* Background-color of the odd rows */
@@ -83,4 +88,8 @@ th {
   transition-duration: 0.4s;
   transition-property: all;
   transition-timing-function: line;
+}
+
+.data-table{
+  width: auto;
 }
