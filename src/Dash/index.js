@@ -116,7 +116,7 @@ let Dash = () => {
 								<th>
 									<a 
 										hrf="https://www.statisticshowto.datasciencecentral.com/population-variance/" 
-										target="_blank">Population Variance
+										target="_blank" href="https://www.statisticshowto.datasciencecentral.com/population-variance/">Population Variance
 									</a>
 								</th>
 								<th>
@@ -158,7 +158,7 @@ let Dash = () => {
 									{data.map((d, idx) => (
 										<tr key={`${idx}-row`} onClick={() => rowClickHander(d)}>
 											{dataHeader.map((dh, dhIdx) => (
-												<td key={`single-data-cell-${d[dh]}-${dhIdx}`} className={dhIdx === 1 ? 'hosp-cell' : null}>{d[dh]}</td>))}
+												<td key={`single-data-cell-${d[dh]}-${dhIdx}`} className={dhIdx === 0 ? 'min-w-cell': dhIdx === 1 ? 'min-w-cell' : null}>{d[dh]}</td>))}
 										</tr>))
 									}
 								</tbody>
