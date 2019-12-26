@@ -94,10 +94,16 @@ let Dash = () => {
 		if(selectedRow !== null && selectedRow.id === rowData.id){
 			setSelectedRow(null)
 		}else{
-			setSelectedRow({...rowData, ...{id: idx}})
+			setSelectedRow({...rowData, ...{id: idx, rowID: rowData.id}})
 		}
 	}
 	
+	if(microSets && microSets['riskScore']){
+		let thisBin = ar.bin()
+		let binned = thisBin(microSets['riskScore'])
+		console.log('binned')
+		console.log(binned)
+	}
 
 	return(
 		<main> 
@@ -181,7 +187,7 @@ let Dash = () => {
 			{
 				selectedRow !== null && 
 				<div className="top-right-box">
-					<h3>Selected-Row stats</h3>
+					<h3>{`${selectedRow.rowID} Stats`}</h3>
 					<sub>&& comparison notes</sub>
 					{Object.keys(selectedRow).map((k,idx) => {
 						if(idx !== 0){
