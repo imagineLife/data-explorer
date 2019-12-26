@@ -64,7 +64,7 @@ let Dash = () => {
 				//push cell value to matching-header-micro-data-set
 				if(!microDataSetObj[thisHeaderID].includes(thisCellTyped)){
 					microDataSetObj[thisHeaderID].push(thisCellTyped)
-					microDataSetObj[thisHeaderID].sort()
+					microDataSetObj[thisHeaderID].sort((a,b) => a - b)
 				}
 			})
 			//push row data to resData array
@@ -185,8 +185,12 @@ let Dash = () => {
 					<sub>&& comparison notes</sub>
 					{Object.keys(selectedRow).map((k,idx) => {
 						if(idx !== 0){
-							console.log('microSets[k]')
-							console.log(microSets[k])
+							let thisMS = microSets[k]
+							let qint = null;
+							if( typeof selectedRow[k] === 'number'){
+								let lastMSArrVal = thisMS[thisMS.length - 1]
+								qint = selectedRow[k] / lastMSArrVal
+							}
 							
 							return (
 								<div
@@ -196,8 +200,13 @@ let Dash = () => {
 									<span className="row-val">{selectedRow[k]}</span>
 									{ typeof selectedRow[k] === 'number' && 
 										<div className={'quantile-wrapper'}>
-											<span>P-Quantile</span>
-											<span>{ar.quantile(microSets[k], selectedRow[k])}</span>
+											<span>
+												<a 
+													href="https://en.wikipedia.org/wiki/Quantile" target="_blank">
+													Quantile
+												</a>
+											</span>
+											<span>{Math.trunc(qint * 100)}</span>
 										</div>
 									}
 								</div>)
