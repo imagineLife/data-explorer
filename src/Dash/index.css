@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  padding: 2rem;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   line-height: 1.42em;
@@ -8,10 +7,19 @@ body {
   background-color:#1F2739;
 }
 
+a{
+  color:#A7A1AE;
+}
+
+a:hover{
+  color: #f5edff;
+}
+
 table {
   text-align: left;
   position: relative;
   border-collapse: collapse; 
+  display: inline-block;
 }
 
 .sticky-header > th{
@@ -38,9 +46,7 @@ th {
   position: sticky;
   top: 0;
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-  /*font-size:3em; */
   font-weight: 300;
-  /*line-height:1em;*/
   text-align: center;
   color: #4DC3FA;
 }
@@ -49,6 +55,7 @@ th {
 	max-height: 300px;
 	overflow-y: scroll;
   width: fit-content;
+  display: inline-block;
 }
 
 .details-table{
@@ -92,4 +99,8 @@ th {
 
 .data-table{
   width: auto;
+}
+
+.min-w-cell{
+  min-width: 75px;
 }
