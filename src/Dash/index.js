@@ -10,6 +10,7 @@ let Dash = () => {
 	let [dataHeader, setDataHeader] = useState([])
 	let [microSets, setMicroSets] = useState({});
 	let [types, setTypes] = useState([])
+	let [selectedRow, setSelectedRow] = useState(null)
 
 	function loadHandler(e){
 		let content = getContent(e)
@@ -61,7 +62,10 @@ let Dash = () => {
 				}
 
 				//push cell value to matching-header-micro-data-set
-				microDataSetObj[thisHeaderID].push(thisCellTyped)
+				if(!microDataSetObj[thisHeaderID].includes(thisCellTyped)){
+					microDataSetObj[thisHeaderID].push(thisCellTyped)
+					microDataSetObj[thisHeaderID].sort()
+				}
 			})
 			//push row data to resData array
 			resData.push(thisRowObj)
@@ -86,11 +90,14 @@ let Dash = () => {
 		reader.readAsText(fileToRead);
 	}
 
-	const rowClickHander = (rowData) => {
-		console.log('rowData')
-		console.log(rowData)
-		
+	const rowClickHander = (rowData,idx) => {
+		if(selectedRow !== null && selectedRow.id === rowData.id){
+			setSelectedRow(null)
+		}else{
+			setSelectedRow({...rowData, ...{id: idx}})
+		}
 	}
+	
 
 	return(
 		<main> 
@@ -116,7 +123,7 @@ let Dash = () => {
 								<th>
 									<a 
 										hrf="https://www.statisticshowto.datasciencecentral.com/population-variance/" 
-										target="_blank" href="https://www.statisticshowto.datasciencecentral.com/population-variance/">Population Variance
+										target="_blank">Population Variance
 									</a>
 								</th>
 								<th>
@@ -156,7 +163,10 @@ let Dash = () => {
 								<tbody className="details-table">
 									{/* Loop Through header columns to create table cells */}
 									{data.map((d, idx) => (
-										<tr key={`${idx}-row`} onClick={() => rowClickHander(d)}>
+										<tr 
+											key={`${idx}-row`} 
+											onClick={() => rowClickHander(d, idx)}
+											className={selectedRow && selectedRow.id === idx ? 'data-row selected-row': 'data-row '}>
 											{dataHeader.map((dh, dhIdx) => (
 												<td key={`single-data-cell-${d[dh]}-${dhIdx}`} className={dhIdx === 0 ? 'min-w-cell': dhIdx === 1 ? 'min-w-cell' : null}>{d[dh]}</td>))}
 										</tr>))
@@ -166,6 +176,34 @@ let Dash = () => {
 						</div>
 					</div>
 				</Fragment>
+			}
+
+			{
+				selectedRow !== null && 
+				<div className="top-right-box">
+					<h3>Selected-Row stats</h3>
+					<sub>&& comparison notes</sub>
+					{Object.keys(selectedRow).map((k,idx) => {
+						if(idx !== 0){
+							console.log('microSets[k]')
+							console.log(microSets[k])
+							
+							return (
+								<div
+									key={`${k}-${idx}`} 
+									className="stat-wrapper">
+									<span className="row-key">{k}</span>
+									<span className="row-val">{selectedRow[k]}</span>
+									{ typeof selectedRow[k] === 'number' && 
+										<div className={'quantile-wrapper'}>
+											<span>P-Quantile</span>
+											<span>{ar.quantile(microSets[k], selectedRow[k])}</span>
+										</div>
+									}
+								</div>)
+						}else{ return null}
+					}).filter(d => d)}
+				</div>
 			}
 		</main>
 	)
