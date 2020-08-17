@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.42em;
+  color:rgb(167,161,174);
+  background-color:#1F2739;
+}
+
+a{
+  color:rgb(167,161,174);
+}
+
+a:hover{
+  color: #f5edff;
+}
+
+table {
+  text-align: left;
+  position: relative;
+  border-collapse: collapse; 
+  display: inline-block;
+}
+
+.sticky-header > th{
+	background-color: #1F2739;
+}
+
+th, td {
+  padding: 0.25rem;
+}
+tr.red th {
+  background: red;
+  color: white;
+}
+tr.green th {
+  background: green;
+  color: white;
+}
+tr.purple th {
+  background: purple;
+  color: white;
+}
+th {
+  /*background: white;*/
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  font-weight: 300;
+  text-align: center;
+  color: #4DC3FA;
+}
+
+.max-height{
+	max-height: 300px;
+	overflow-y: scroll;
+  width: fit-content;
+  display: inline-block;
+}
+
+.details-table{
+ line-height: 2.25;
+}
+
+/* Background-color of the odd rows */
+.details-table tr:nth-child(odd) {
+	background-color: rgb(50,60,80);
+}
+
+.details-table tr:nth-child(odd):hover {
+  background-color: rgb(70,80,100);
+}
+
+/* Background-color of the even rows */
+.details-table tr:nth-child(even) {
+	background-color: rgb(44,52,70);
+}
+
+.details-table tr:nth-child(even):hover {
+  background-color: rgb(64,72,90);
+}
+
+.container th {
+	background-color: #1F2739;
+}
+
+/*.details-table td:first-child { color: #FB667A; }*/
+
+/*.details-table tr:hover {
+  background-color: #464A52;
+	-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+ -moz-box-shadow: 0 6px 6px -6px #0E1119;
+  box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+.details-table td:hover {
+  background-color: #FFF842;
+  color: #403E10;
+  font-weight: bold;
+  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+  transform: translate3d(6px, -6px, 0);
+  transition-delay: 0s;
+  transition-duration: 0.4s;
+  transition-property: all;
+  transition-timing-function: line;
+}*/
+
+.data-table{
+  width: auto;
+}
+
+.min-w-cell{
+  min-width: 75px;
+}
+
+.top-right-box{
+  width: 300px;
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+
+h3{
+  margin: 0;
+  padding: 0;
+}
+
+.details-table > tr.selected-row, .details-table > tr.selected-row:hover{
+  background-color: rgb(167,161,174);
+  color: #1F2739;
+}
+
+.data-row{
+  cursor: pointer;
+}
