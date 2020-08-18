@@ -94,7 +94,16 @@ let Dash = () => {
 	return(
 		<main> 
 			<h2>Data Explorer</h2>
-			{data.length < 1 && <input type="file" accept=".csv" onChange={e => handleFiles(e)}/>}
+			
+			{/*Conditional Button*/}
+			{data.length < 1 && <input 
+				type="file" 
+				accept=".csv" 
+				name="Select CSV"
+				onChange={e => handleFiles(e)}/>
+			}
+
+		{/*Conditional Table*/}
 			{data.length > 0 && dataHeader &&
 				<Fragment>
 					<TableHeader d={dataHeader}/>
